@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LINE ダッシュボード | JTT 様向け クリエイティブAI 提案モック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/atarayo.css">
+<style>
+.funnel-row { display: flex; align-items: center; gap: 0; margin-bottom: 6px; }
+.funnel-bar-wrap { flex: 1; background: var(--bg-light); border-radius: 4px; height: 36px; position: relative; overflow: hidden; }
+.funnel-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 12px; color: white; font-size: 12px; font-weight: 600; transition: width 0.3s; }
+.funnel-label { width: 120px; font-size: 12px; color: var(--text-sub); padding-right: 12px; text-align: right; flex-shrink: 0; }
+.funnel-value { width: 80px; font-size: 13px; font-weight: 600; color: var(--text-on-light); padding-left: 12px; flex-shrink: 0; }
+.funnel-rate { width: 60px; font-size: 12px; color: var(--text-sub); padding-left: 8px; flex-shrink: 0; }
+.layer-tag { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.layer-new { background: #DCE9F5; color: #1A4A7A; }
+.layer-repeat { background: #F5E4D6; color: #8E3A0A; }
+/* ── Mini LINE card thumbnails ── */
+.mini-line { width: 58px; height: 76px; border-radius: 6px; overflow: hidden; border: 1.5px solid #06C755; background: white; font-family: 'Noto Sans JP', sans-serif; flex-shrink: 0; }
+.mini-line-header { height: 11px; background: #06C755; display: flex; align-items: center; padding: 0 4px; color: white; font-size: 6px; font-weight: 700; gap: 2px; }
+.mini-line-img { height: 36px; overflow: hidden; position: relative; }
+.mini-line-img-inner { width: 100%; height: 100%; }
+.mini-line-text { padding: 3px 4px; font-size: 6px; line-height: 1.3; color: #222; font-weight: 600; overflow: hidden; }
+.mini-line-cta { margin: 0 4px 3px; background: #06C755; color: white; text-align: center; border-radius: 3px; font-size: 5.5px; font-weight: 700; padding: 2px 0; }
+/* gradient image areas for line cards */
+.mli-kyoto { background: linear-gradient(155deg, #ffd4e8 0%, #ffaac8 40%, #1a3050 100%); }
+.mli-nagoya { background: linear-gradient(155deg, #fff4e6 0%, #ffd4a0 40%, #1a3050 100%); }
+.mli-choju  { background: linear-gradient(155deg, #f5ead8 0%, #e8d4a8 40%, #3a2a10 100%); }
+.mli-hayaki { background: linear-gradient(155deg, #e8580a 0%, #f5820a 35%, #0d2a4a 100%); }
+.mli-tokai  { background: linear-gradient(155deg, #2a6090 0%, #4a9830 50%, #c84a0a 100%); }
+.mli-hokuriku { background: linear-gradient(155deg, #2a4a80 0%, #4a7ab0 40%, #1a3050 100%); }
+.mli-weekend  { background: linear-gradient(155deg, #5a6573 0%, #8a9aaa 40%, #1a2a3a 100%); }
+.mli-member   { background: linear-gradient(155deg, #8E3F0E 0%, #c25a1a 40%, #0d2a4a 100%); }
+/* axis tags (same as ad dashboard) */
+.axis-tag { display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 8px; font-size: 10px; font-weight: 500; white-space: nowrap; }
+.axis-appeal-price { background: #F5E4D6; color: #8E3A0A; }
+.axis-appeal-exp   { background: #DCE9F5; color: #1A4A7A; }
+.axis-appeal-limit { background: #FCEDE0; color: #9A4800; }
+.axis-appeal-trust { background: #DCEFE4; color: #1E5A3A; }
+.axis-appeal-new   { background: #F0F4F8; color: #445566; }
+.axis-seg-family   { background: #FEF3F2; color: #8B2000; }
+.axis-seg-f20      { background: #FCE7F6; color: #8B0060; }
+.axis-seg-couple   { background: #FEF3F2; color: #8B2000; }
+.axis-seg-senior   { background: #EFF4F0; color: #2A5A3A; }
+.axis-seg-rail     { background: #EBF1F8; color: #1A4A7A; }
+.axis-seg-vip      { background: #DCEFE4; color: #1E5A3A; }
+.axis-motif-fuji   { background: #EBF1F8; color: #1A4A7A; }
+.axis-motif-train  { background: #EBF1F8; color: #1A4A7A; }
+.axis-motif-castle { background: #FEF7E0; color: #7A5500; }
+.axis-motif-culture{ background: #FEF7E0; color: #7A5500; }
+.axis-motif-nature { background: #EBF1F8; color: #1A4A7A; }
+.axis-design-photo { background: #F0F4F8; color: #445566; }
+.axis-design-text  { background: #F0F4F8; color: #445566; }
+.axis-design-simple{ background: #F0F4F8; color: #445566; }
+.axis-design-wafuu { background: #F0F4F8; color: #445566; }
+.axis-cell { display: flex; flex-direction: column; gap: 3px; }
+.table-scroll { overflow-x: auto; }
+.table-scroll .table { min-width: 860px; }
+.layer-vip { background: #DCEFE4; color: #1E6A4A; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a href="index.html" class="logo">atarayo</a>
+    <div class="header-divider"></div>
+    <div class="header-context"><strong>JTT</strong> 様向け クリエイティブAI 提案モック</div>
+    <div class="header-right">LINE ダッシュボード — 第1層</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-section">画面一覧</div>
+    <a href="index.html" class="sidebar-item">概要 / 全体像</a>
+    <a href="dashboard_ad.html" class="sidebar-item">広告ダッシュボード</a>
+    <a href="dashboard_line.html" class="sidebar-item is-active">LINE ダッシュボード</a>
+    <a href="dashboard_mail.html" class="sidebar-item">メール ダッシュボード</a>
+    <a href="dashboard_ugc.html" class="sidebar-item">UGC ダッシュボード</a>
+    <a href="portfolio.html" class="sidebar-item">認知ポートフォリオ</a>
+    <a href="ai_planning.html" class="sidebar-item">企画→生成 AI</a>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">LINE ダッシュボード <span class="badge badge-orange" style="font-size: 12px; vertical-align: middle;">第1層</span></h1>
+    <p class="page-subtitle">友だち追加経路 × 関係性レイヤー別の配信反応を可視化。「同一クリエイティブを全友だちに配信」の損失構造を捉える。</p>
+
+    <div class="filter-bar">
+      <select class="filter-select">
+        <option>期間: 2026-04（直近の主要セール）</option>
+        <option>2026-03</option>
+        <option>過去3ヶ月</option>
+      </select>
+      <select class="filter-select">
+        <option>セグメント: すべて</option>
+        <option>新規友だち（3ヶ月以内）</option>
+        <option>リピーター</option>
+        <option>優良会員</option>
+      </select>
+      <select class="filter-select">
+        <option>配信種別: すべて</option>
+        <option>セール告知</option>
+        <option>ナーチャ</option>
+        <option>特定商品</option>
+      </select>
+      <button class="btn btn-secondary btn-sm" style="margin-left: auto;">CSV書き出し</button>
+    </div>
+
+    <div class="alert alert-warning">
+      <strong>仮説:</strong> 全配信に同一クリエイティブを投入中。新規友だちの開封率が優良会員比 <strong>-38pt</strong>。関係性レイヤー別の訴求分けが未実施。
+      <a href="portfolio.html" class="text-accent" style="margin-left: auto; white-space: nowrap;">認知ポートフォリオで詳細 →</a>
+    </div>
+
+    <!-- KPI -->
+    <div class="section">
+      <div class="grid grid-4">
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">配信通数（月次）</span>
+            <span class="kpi-value">182<span class="kpi-unit">K</span></span>
+            <span class="kpi-delta kpi-delta-plus">+8.4% 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">開封率（全体平均）</span>
+            <span class="kpi-value">21.4<span class="kpi-unit">%</span></span>
+            <span class="kpi-delta kpi-delta-minus">-1.2pt 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">CTR（タップ率）</span>
+            <span class="kpi-value">4.8<span class="kpi-unit">%</span></span>
+            <span class="kpi-delta text-muted">前月 4.9%</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">CV数（予約完了）</span>
+            <span class="kpi-value">682</span>
+            <span class="kpi-delta kpi-delta-plus">+5.6% 前月比</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Layer analysis + funnel -->
+    <div class="section">
+      <div class="grid grid-asym">
+        <!-- Layer chart -->
+        <div class="card">
+          <div class="card-header">
+            関係性レイヤー別 開封率 / CTR 比較
+            <div class="flex gap-8" style="font-size: 11px;">
+              <span class="layer-tag layer-new">新規</span>
+              <span class="layer-tag layer-repeat">リピーター</span>
+              <span class="layer-tag layer-vip">優良会員</span>
+            </div>
+          </div>
+          <canvas id="layer-chart" height="120"></canvas>
+          <p class="text-muted mt-16" style="font-size: 11px;">
+            ※ 新規友だちの開封率 9.6% に対し優良会員は 47.3%。同一クリエイティブでの配信は新規層を消耗させている。
+          </p>
+        </div>
+        <!-- Funnel -->
+        <div class="card">
+          <div class="card-header">配信 → CV ファネル（全体）</div>
+          <div style="margin-top: 8px;">
+            <div class="funnel-row">
+              <div class="funnel-label">配信</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 100%; background: var(--brand-dark);">182,000通</div>
+              </div>
+              <div class="funnel-rate"></div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">開封</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 21.4%; background: #1A4A7A;">38,948</div>
+              </div>
+              <div class="funnel-rate text-muted">21.4%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">タップ（CTR）</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 10.3%; background: var(--brand-accent);">8,736</div>
+              </div>
+              <div class="funnel-rate text-muted">4.8%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">LP滞在10秒+</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 5.4%; background: var(--warning);">4,286</div>
+              </div>
+              <div class="funnel-rate text-muted">2.4%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">予約完了</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 0.37%; background: var(--success); min-width: 60px;">682</div>
+              </div>
+              <div class="funnel-rate text-muted">0.37%</div>
+            </div>
+          </div>
+          <p class="text-muted mt-16" style="font-size: 11px;">
+            ※ タップ → LP滞在 の離脱が最大。LPとクリエイティブの訴求不一致が疑われる。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Route × response cross -->
+    <div class="section">
+      <h2 class="section-title">友だち追加経路 × 訴求タイプ 開封率マトリックス</h2>
+      <div class="card">
+        <div class="heatmap" style="grid-template-columns: 130px repeat(4, 1fr);">
+          <!-- header row -->
+          <div class="heatmap-corner"></div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">価格・割引</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">体験・発見</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">限定・先行</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">安心・信頼</div>
+          <!-- Row: 自然流入 -->
+          <div class="heatmap-label">自然流入<br><span style="font-size: 10px;">（検索・シェア）</span></div>
+          <div class="heatmap-cell h-mid-2">28.4%</div>
+          <div class="heatmap-cell h-high">38.2%</div>
+          <div class="heatmap-cell h-mid">22.1%</div>
+          <div class="heatmap-cell h-low">14.6%</div>
+          <!-- Row: 広告経由 -->
+          <div class="heatmap-label">広告経由</div>
+          <div class="heatmap-cell h-mid">19.8%</div>
+          <div class="heatmap-cell h-mid">21.4%</div>
+          <div class="heatmap-cell h-mid-2">26.6%</div>
+          <div class="heatmap-cell h-low">11.2%</div>
+          <!-- Row: 既存会員招待 -->
+          <div class="heatmap-label">既存会員招待</div>
+          <div class="heatmap-cell h-very-high">52.8%</div>
+          <div class="heatmap-cell h-high">44.1%</div>
+          <div class="heatmap-cell h-mid-2">31.7%</div>
+          <div class="heatmap-cell h-mid">20.4%</div>
+          <!-- Row: QRコード（店頭） -->
+          <div class="heatmap-label">QRコード<br><span style="font-size: 10px;">（店頭・パンフ）</span></div>
+          <div class="heatmap-cell h-mid">18.6%</div>
+          <div class="heatmap-cell h-mid">20.2%</div>
+          <div class="heatmap-cell h-mid-2">27.4%</div>
+          <div class="heatmap-cell h-low">12.8%</div>
+          <!-- Row: 新規友だち全体 -->
+          <div class="heatmap-label" style="color: var(--error); font-weight: 600;">新規友だち<br><span style="font-size: 10px;">（3ヶ月以内・全経路）</span></div>
+          <div class="heatmap-cell h-low">9.6%</div>
+          <div class="heatmap-cell h-low">11.8%</div>
+          <div class="heatmap-cell h-mid">18.4%</div>
+          <div class="heatmap-cell h-low">7.2%</div>
+        </div>
+        <p class="text-muted" style="font-size: 11px; margin-top: 12px;">
+          濃いオレンジ = 開封率高 / グレー = 低。「自然流入×体験訴求」「既存会員招待×価格訴求」が二大ホット領域。新規友だち全経路は全訴求で低水準 — 訴求設計が必要。
+        </p>
+      </div>
+    </div>
+
+    <!-- Creative table -->
+    <div class="section">
+      <h2 class="section-title">クリエイティブ単位の評価（上位8件）</h2>
+      <div class="table-wrap table-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 66px;">サムネ</th>
+              <th style="min-width: 160px;">配信テキスト</th>
+              <th>訴求タイプ</th>
+              <th>セグメント</th>
+              <th>モチーフ</th>
+              <th>デザイン</th>
+              <th class="text-right">配信数</th>
+              <th class="text-right">開封率</th>
+              <th class="text-right">CTR</th>
+              <th class="text-right">CVR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="mini-line">
+                  <div class="mini-line-header">🟢 JTT</div>
+                  <div class="mini-line-img"><div class="mini-line-img-inner mli-kyoto"></div></div>
+                  <div class="mini-line-text">今だけ！京都3日間 ¥39,800～</div>
+                  <div class="mini-line-cta">詳しくはこちら</div>
+                </div>
+              </td>
+              <td class="fw-600">「今だけ！京都3日間 ¥39,800～」<span class="text-muted" style="font-size: 10px; display: block;">04_line_kyoto_sale_v2</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-price">価格・割引</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-vip">優良会員</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-nature">富士山・自然</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">28,400</td>
+              <td class="text-right fw-600">49.2%</td>
+              <td class="text-right">8.4%</td>
+              <td class="text-right text-success">1.82%</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-line">
+                  <div class="mini-line-header">🟢 JTT</div>
+                  <div class="mini-line-img"><div class="mini-line-img-inner mli-member"></div></div>
+                  <div class="mini-line-text">メンバー限定、秋旅先行予約</div>
+                  <div class="mini-line-cta">詳しくはこちら</div>
+                </div>
+              </td>
+              <td class="fw-600">「JTTメンバー限定、秋旅先行予約」<span class="text-muted" style="font-size: 10px; display: block;">04_line_member_v4</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-limit">限定・先行</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-vip">優良会員</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-fuji">富士山・自然</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-text">テキスト大きめ</span></div></td>
+              <td class="text-right">12,400</td>
+              <td class="text-right fw-600">54.6%</td>
+              <td class="text-right fw-600">9.8%</td>
+              <td class="text-right text-success">2.14%</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-line">
+                  <div class="mini-line-header">🟢 JTT</div>
+                  <div class="mini-line-img"><div class="mini-line-img-inner mli-hayaki"></div></div>
+                  <div class="mini-line-text">会員限定 早期予約で5%OFF</div>
+                  <div class="mini-line-cta">詳しくはこちら</div>
+                </div>
+              </td>
+              <td class="fw-600">「会員限定 早期予約で5%OFF」<span class="text-muted" style="font-size: 10px; display: block;">04_line_early_v3</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-price">価格・割引</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-couple">リピーター</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-train">新幹線・乗り物</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-text">テキスト大きめ</span></div></td>
+              <td class="text-right">22,800</td>
+              <td class="text-right">38.4%</td>
+              <td class="text-right">6.2%</td>
+              <td class="text-right">1.24%</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-line">
+                  <div class="mini-line-header">🟢 JTT</div>
+                  <div class="mini-line-img"><div class="mini-line-img-inner mli-nagoya"></div></div>
+                  <div class="mini-line-text">黄金週間、まだ間に合う旅先3選</div>
+                  <div class="mini-line-cta">詳しくはこちら</div>
+                </div>
+              </td>
+              <td class="fw-600">「黄金週間、まだ間に合う旅先3選」<span class="text-muted" style="font-size: 10px; display: block;">04_line_gw_v2</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-exp">体験・発見</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-couple">リピーター</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-castle">城・観光地</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">34,600</td>
+              <td class="text-right">31.8%</td>
+              <td class="text-right">5.8%</td>
+              <td class="text-right">0.96%</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-line">
+                  <div class="mini-line-header">🟢 JTT</div>
+                  <div class="mini-line-img"><div class="mini-line-img-inner mli-hokuriku"></div></div>
+                  <div class="mini-line-text">北陸新幹線開通記念プラン</div>
+                  <div class="mini-line-cta">詳しくはこちら</div>
+                </div>
+              </td>
+              <td class="fw-600">「北陸新幹線開通記念プラン」<span class="text-muted" style="font-size: 10px; display: block;">04_line_hokuriku_v2</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-new">新規性・旬</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-rail">鉄道ファン</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-train">新幹線・乗り物</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">26,200</td>
+              <td class="text-right">28.6%</td>
+              <td class="text-right">4.4%</td>
+              <td class="text-right">0.72%</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-line">
+                  <div class="mini-line-header">🟢 JTT</div>
+                  <div class="mini-line-img"><div class="mini-line-img-inner mli-kyoto"></div></div>
+                  <div class="mini-line-text">名古屋〜京都、こんな旅知ってた？</div>
+                  <div class="mini-line-cta">詳しくはこちら</div>
+                </div>
+              </td>
+              <td class="fw-600">「名古屋〜京都、こんな旅知ってた？」<span class="text-muted" style="font-size: 10px; display: block;">04_line_kyoto_exp_v1</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-exp">体験・発見</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-f20">新規友だち</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-castle">城・観光地</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">31,200</td>
+              <td class="text-right">22.6%</td>
+              <td class="text-right">5.1%</td>
+              <td class="text-right">0.64%</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-line">
+                  <div class="mini-line-header">🟢 JTT</div>
+                  <div class="mini-line-img"><div class="mini-line-img-inner mli-choju"></div></div>
+                  <div class="mini-line-text">初めてのJTT、使い方ガイド</div>
+                  <div class="mini-line-cta">詳しくはこちら</div>
+                </div>
+              </td>
+              <td class="fw-600">「初めてのJTT、使い方ガイド」<span class="text-muted" style="font-size: 10px; display: block;">04_line_onboard_v1</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-trust">安心・信頼</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-f20">新規友だち</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-culture">伝統文化</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-simple">シンプルバナー</span></div></td>
+              <td class="text-right">42,000</td>
+              <td class="text-right">14.2%</td>
+              <td class="text-right">3.6%</td>
+              <td class="text-right">0.28%</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-line">
+                  <div class="mini-line-header">🟢 JTT</div>
+                  <div class="mini-line-img"><div class="mini-line-img-inner mli-weekend"></div></div>
+                  <div class="mini-line-text">今週末の旅、決まってますか？</div>
+                  <div class="mini-line-cta">詳しくはこちら</div>
+                </div>
+              </td>
+              <td class="fw-600">「今週末の旅、決まってますか？」<span class="text-muted" style="font-size: 10px; display: block;">04_line_weekend_v1</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-new">新規性・旬</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-f20">新規友だち</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-train">新幹線・乗り物</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-simple">シンプルバナー</span></div></td>
+              <td class="text-right">38,800</td>
+              <td class="text-right text-error">8.2%</td>
+              <td class="text-right text-error">2.1%</td>
+              <td class="text-right text-error">0.14%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Insight summary -->
+    <div class="section">
+      <h2 class="section-title">改善インサイト（AI生成・要確認）</h2>
+      <div class="grid grid-3">
+        <div class="card" style="border-left: 3px solid var(--error);">
+          <div class="card-header" style="font-size: 14px; color: var(--error);">❶ 新規友だちへの訴求設計不在</div>
+          <p style="font-size: 13px; color: var(--text-sub); line-height: 1.7;">新規友だちへの全配信で開封率 9.6%。優良会員比 -38pt。友だち追加直後の「体験訴求 → 信頼構築 → 価格提示」の3ステップナーチャ設計が急務。</p>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--warning);">
+          <div class="card-header" style="font-size: 14px; color: var(--warning);">❷ 優良会員への配信量が過少</div>
+          <p style="font-size: 13px; color: var(--text-sub); line-height: 1.7;">優良会員の配信数は全体の6.8%（12,400通）だがCVRは2.14%で最高値。配信比率の最適化と、限定感を高めたセグメント専用クリエイティブで更なる刈り取りが可能。</p>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--brand-accent);">
+          <div class="card-header" style="font-size: 14px; color: var(--brand-accent);">❸ 体験訴求の試行不足</div>
+          <p style="font-size: 13px; color: var(--text-sub); line-height: 1.7;">体験訴求クリエイティブは全配信の18%のみ。自然流入層 × 体験訴求で開封率 38.2%と最高値を記録しているにもかかわらず、試行量が少なくデータ蓄積が進んでいない。</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>atarayo prototype — 仮データ・実装前のイメージです</div>
+    <div>© atarayo Inc. / 最終更新 2026-05-24</div>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+Chart.defaults.font.family = '"Inter", "Noto Sans JP", sans-serif';
+Chart.defaults.color = '#5A6573';
+Chart.defaults.borderColor = '#D8DDE3';
+
+// Layer comparison: open rate + CTR per layer
+new Chart(document.getElementById('layer-chart'), {
+  type: 'bar',
+  data: {
+    labels: ['新規友だち\n（3ヶ月以内）', 'リピーター\n（3〜12ヶ月）', '優良会員\n（12ヶ月+）'],
+    datasets: [
+      {
+        label: '開封率 (%)',
+        data: [9.6, 28.4, 47.3],
+        backgroundColor: ['#DCE9F5', '#F5E4D6', '#DCEFE4'],
+        borderColor: ['#1A4A7A', '#8E3A0A', '#1E6A4A'],
+        borderWidth: 1.5,
+        borderRadius: 4,
+      },
+      {
+        label: 'CTR (%)',
+        data: [2.8, 5.6, 9.2],
+        backgroundColor: ['rgba(26,74,122,0.6)', 'rgba(142,58,10,0.6)', 'rgba(30,106,74,0.6)'],
+        borderColor: ['#1A4A7A', '#8E3A0A', '#1E6A4A'],
+        borderWidth: 1.5,
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 12 }, boxWidth: 14 } },
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}%` } }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { callback: v => v + '%', font: { size: 11 } },
+        max: 60
+      },
+      x: { ticks: { font: { size: 11 } } }
+    }
+  }
+});
+</script>
+</body>
+</html>

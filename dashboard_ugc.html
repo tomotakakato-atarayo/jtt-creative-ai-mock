@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UGC ダッシュボード | JTT 様向け クリエイティブAI 提案モック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/atarayo.css">
+<style>
+/* ── UGC投稿件数バーチャート（CSSのみ）── */
+.ugc-chart { display: flex; align-items: flex-end; gap: 18px; height: 200px; padding: 12px 8px 0; border-bottom: 1px solid var(--border); }
+.ugc-month { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; }
+.ugc-bars { display: flex; align-items: flex-end; gap: 4px; height: 100%; width: 100%; justify-content: center; }
+.ugc-bar { width: 22px; border-radius: 3px 3px 0 0; position: relative; }
+.ugc-bar-x { background: var(--brand-dark); }
+.ugc-bar-ig { background: linear-gradient(180deg, #C13584 0%, #E1306C 60%, #F77737 100%); }
+.ugc-bar-val { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; color: var(--text-sub); white-space: nowrap; }
+.ugc-month-label { font-size: 11px; color: var(--text-sub); margin-top: 6px; white-space: nowrap; }
+.ugc-campaign-marker { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 600; color: var(--brand-accent); background: #FFF7F0; border: 1px solid var(--brand-accent); border-radius: 8px; padding: 1px 6px; white-space: nowrap; }
+.ugc-legend { display: flex; gap: 16px; margin-top: 10px; font-size: 11px; color: var(--text-sub); }
+.ugc-legend-chip { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
+
+/* ── ネガポジ横棒 ── */
+.senti-bar { display: flex; height: 28px; border-radius: 5px; overflow: hidden; font-size: 11px; font-weight: 600; color: white; }
+.senti-pos { background: #1E8A5F; display: flex; align-items: center; justify-content: center; }
+.senti-neu { background: #8A94A0; display: flex; align-items: center; justify-content: center; }
+.senti-neg { background: #C0392B; display: flex; align-items: center; justify-content: center; }
+.senti-mini { display: flex; height: 8px; border-radius: 3px; overflow: hidden; width: 100%; min-width: 70px; }
+.senti-mini span { display: block; height: 100%; }
+
+/* ── ネガ要因タグ ── */
+.neg-tag { display: inline-flex; align-items: center; gap: 6px; background: #FBEDEB; color: #8E2A1E; border: 1px solid #E5C2BC; border-radius: 12px; padding: 4px 10px; font-size: 12px; font-weight: 500; }
+.neg-tag strong { font-size: 13px; }
+
+/* ── 代表投稿の吹き出し ── */
+.ugc-post { background: var(--bg-light); border: 1px solid var(--border); border-radius: 6px; padding: 6px 9px; font-size: 11px; line-height: 1.5; color: var(--text-sub); }
+.ugc-post-source { font-size: 9px; color: var(--text-sub); opacity: 0.7; margin-top: 2px; }
+
+/* ── 4軸タグ（dashboard_ad と共通の文法）── */
+.axis-tag { display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 8px; font-size: 10px; font-weight: 500; white-space: nowrap; }
+.axis-appeal-price { background: #F5E4D6; color: #8E3A0A; }
+.axis-appeal-exp   { background: #DCE9F5; color: #1A4A7A; }
+.axis-appeal-limit { background: #FCEDE0; color: #9A4800; }
+.axis-seg-f20      { background: #FCE7F6; color: #8B0060; }
+.axis-seg-family   { background: #FEF3F2; color: #8B2000; }
+.axis-motif-fuji   { background: #EBF1F8; color: #1A4A7A; }
+.axis-motif-train  { background: #EBF1F8; color: #1A4A7A; }
+.axis-motif-food   { background: #FEF7E0; color: #7A5500; }
+.axis-motif-culture{ background: #FEF7E0; color: #7A5500; }
+.axis-cell { display: flex; flex-direction: column; gap: 3px; }
+
+/* ── UGC ↔ 広告 対比表 ── */
+.gap-row-hot td { background: #FFF7F0; }
+
+.table-scroll { overflow-x: auto; }
+.table-scroll .table { min-width: 860px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a href="index.html" class="logo">atarayo</a>
+    <div class="header-divider"></div>
+    <div class="header-context"><strong>JTT</strong> 様向け クリエイティブAI 提案モック</div>
+    <div class="header-right">UGC ダッシュボード — 第1層</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-section">画面一覧</div>
+    <a href="index.html" class="sidebar-item">概要 / 全体像</a>
+    <a href="dashboard_ad.html" class="sidebar-item">広告ダッシュボード</a>
+    <a href="dashboard_line.html" class="sidebar-item">LINE ダッシュボード</a>
+    <a href="dashboard_mail.html" class="sidebar-item">メール ダッシュボード</a>
+    <a href="dashboard_ugc.html" class="sidebar-item is-active">UGC ダッシュボード</a>
+    <a href="portfolio.html" class="sidebar-item">認知ポートフォリオ</a>
+    <a href="ai_planning.html" class="sidebar-item">企画→生成 AI</a>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">UGC ダッシュボード <span class="badge badge-orange" style="font-size: 12px; vertical-align: middle;">第1層</span></h1>
+    <p class="page-subtitle">X / Instagram の自社関連投稿をLLMが自動収集・分類。「どんな内容の投稿が、どれだけあるか」を1件ずつ目視せずに把握し、広告と同じ4軸でクリエイティブ生成に還流する。</p>
+
+    <div class="filter-bar">
+      <select class="filter-select">
+        <option>期間: 2026-05</option>
+        <option>2026-04</option>
+        <option>過去6ヶ月</option>
+      </select>
+      <select class="filter-select">
+        <option>媒体: X + Instagram 合算</option>
+        <option>X のみ</option>
+        <option>Instagram のみ</option>
+      </select>
+      <select class="filter-select">
+        <option>収集対象: 自社メンション + 指定ハッシュタグ</option>
+        <option>自社メンションのみ</option>
+        <option>指定ハッシュタグのみ</option>
+      </select>
+      <button class="btn btn-secondary btn-sm" style="margin-left: auto;">CSV書き出し</button>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="section">
+      <div class="grid grid-4">
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">月間UGC投稿件数（X+IG合算）</span>
+            <span class="kpi-value">1,040</span>
+            <span class="kpi-delta kpi-delta-plus">+25.3% 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">ポジティブ率</span>
+            <span class="kpi-value">78<span class="kpi-unit">%</span></span>
+            <span class="kpi-delta kpi-delta-plus">+3pt 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">投稿テーマ数（自動分類）</span>
+            <span class="kpi-value">14</span>
+            <span class="kpi-delta kpi-delta-plus">+2 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">施策起点投稿の比率</span>
+            <span class="kpi-value">36<span class="kpi-unit">%</span></span>
+            <span class="kpi-delta kpi-delta-plus">+8pt 前月比</span>
+          </div>
+        </div>
+      </div>
+      <p class="text-muted" style="font-size: 11px; margin-top: 8px;">※ 施策起点投稿 = キャンペーンハッシュタグ・キャンペーン期間中の自社メンションを含む投稿。数値はすべて仮データ。</p>
+    </div>
+
+    <!-- Trend bar chart (CSS only) -->
+    <div class="section">
+      <h2 class="section-title">投稿件数の推移（直近6ヶ月） <span class="text-muted" style="font-size: 12px; font-weight: 400;">施策実施月と投稿増の関係を見る</span></h2>
+      <div class="card">
+        <div class="ugc-chart">
+          <div class="ugc-month">
+            <div class="ugc-bars">
+              <div class="ugc-bar ugc-bar-x" style="height: 38%;"><span class="ugc-bar-val">310</span></div>
+              <div class="ugc-bar ugc-bar-ig" style="height: 22%;"><span class="ugc-bar-val">180</span></div>
+            </div>
+            <div class="ugc-month-label">2025-12</div>
+          </div>
+          <div class="ugc-month">
+            <div class="ugc-campaign-marker">🎍 新春セール</div>
+            <div class="ugc-bars">
+              <div class="ugc-bar ugc-bar-x" style="height: 50%;"><span class="ugc-bar-val">405</span></div>
+              <div class="ugc-bar ugc-bar-ig" style="height: 28%;"><span class="ugc-bar-val">230</span></div>
+            </div>
+            <div class="ugc-month-label">2026-01</div>
+          </div>
+          <div class="ugc-month">
+            <div class="ugc-bars">
+              <div class="ugc-bar ugc-bar-x" style="height: 42%;"><span class="ugc-bar-val">345</span></div>
+              <div class="ugc-bar ugc-bar-ig" style="height: 26%;"><span class="ugc-bar-val">215</span></div>
+            </div>
+            <div class="ugc-month-label">2026-02</div>
+          </div>
+          <div class="ugc-month">
+            <div class="ugc-campaign-marker">🌸 春の早期予約</div>
+            <div class="ugc-bars">
+              <div class="ugc-bar ugc-bar-x" style="height: 58%;"><span class="ugc-bar-val">470</span></div>
+              <div class="ugc-bar ugc-bar-ig" style="height: 36%;"><span class="ugc-bar-val">295</span></div>
+            </div>
+            <div class="ugc-month-label">2026-03</div>
+          </div>
+          <div class="ugc-month">
+            <div class="ugc-bars">
+              <div class="ugc-bar ugc-bar-x" style="height: 52%;"><span class="ugc-bar-val">425</span></div>
+              <div class="ugc-bar ugc-bar-ig" style="height: 48%;"><span class="ugc-bar-val">390</span></div>
+            </div>
+            <div class="ugc-month-label">2026-04</div>
+          </div>
+          <div class="ugc-month">
+            <div class="ugc-campaign-marker">📷 #推し旅 投稿企画</div>
+            <div class="ugc-bars">
+              <div class="ugc-bar ugc-bar-x" style="height: 72%;"><span class="ugc-bar-val">585</span></div>
+              <div class="ugc-bar ugc-bar-ig" style="height: 56%;"><span class="ugc-bar-val">455</span></div>
+            </div>
+            <div class="ugc-month-label">2026-05</div>
+          </div>
+        </div>
+        <div class="ugc-legend">
+          <span><span class="ugc-legend-chip" style="background: var(--brand-dark);"></span>X</span>
+          <span><span class="ugc-legend-chip" style="background: linear-gradient(135deg, #C13584, #F77737);"></span>Instagram</span>
+          <span style="margin-left: auto;">オレンジのマーカー = 施策実施月。施策月は平常月比 +30〜45% の投稿増（仮データ）。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme classification table -->
+    <div class="section">
+      <h2 class="section-title">投稿内容の自動分類（テーマ別 件数ランキング） <span class="text-muted" style="font-size: 12px; font-weight: 400;">LLMがテキスト＋画像からテーマを判定</span></h2>
+      <div class="table-wrap table-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 36px;">#</th>
+              <th style="min-width: 140px;">テーマ</th>
+              <th class="text-right">件数</th>
+              <th class="text-right">前月比</th>
+              <th style="width: 110px;">ネガポジ比率</th>
+              <th style="min-width: 240px;">代表投稿（架空・要約）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="fw-600">1</td>
+              <td class="fw-600">車窓・富士山</td>
+              <td class="text-right fw-600">284</td>
+              <td class="text-right">+18%</td>
+              <td>
+                <div class="senti-mini"><span style="width:89%;background:#1E8A5F;"></span><span style="width:7%;background:#8A94A0;"></span><span style="width:4%;background:#C0392B;"></span></div>
+                <span class="text-muted" style="font-size:10px;">ポジ 89%</span>
+              </td>
+              <td><div class="ugc-post">「新幹線の窓から富士山ドーン。この瞬間のために窓側を取った甲斐があった」<div class="ugc-post-source">X / 写真付き投稿</div></div></td>
+            </tr>
+            <tr>
+              <td class="fw-600">2</td>
+              <td class="fw-600">旅グルメ</td>
+              <td class="text-right fw-600">218</td>
+              <td class="text-right">+9%</td>
+              <td>
+                <div class="senti-mini"><span style="width:84%;background:#1E8A5F;"></span><span style="width:11%;background:#8A94A0;"></span><span style="width:5%;background:#C0392B;"></span></div>
+                <span class="text-muted" style="font-size:10px;">ポジ 84%</span>
+              </td>
+              <td><div class="ugc-post">「名古屋で味噌カツ→夜は手羽先。食べるために旅してる説ある」<div class="ugc-post-source">Instagram / リール</div></div></td>
+            </tr>
+            <tr>
+              <td class="fw-600">3</td>
+              <td class="fw-600">推し活遠征</td>
+              <td class="text-right fw-600">176</td>
+              <td class="text-right fw-600 text-accent">+40%</td>
+              <td>
+                <div class="senti-mini"><span style="width:81%;background:#1E8A5F;"></span><span style="width:13%;background:#8A94A0;"></span><span style="width:6%;background:#C0392B;"></span></div>
+                <span class="text-muted" style="font-size:10px;">ポジ 81%</span>
+              </td>
+              <td><div class="ugc-post">「遠征費を抑えたくて新幹線パック予約。ホテル付きでこの値段は遠征民の味方すぎる」<div class="ugc-post-source">X / テキスト投稿</div></div></td>
+            </tr>
+            <tr>
+              <td class="fw-600">4</td>
+              <td class="fw-600">ぷらっとこだま体験</td>
+              <td class="text-right fw-600">142</td>
+              <td class="text-right">+12%</td>
+              <td>
+                <div class="senti-mini"><span style="width:76%;background:#1E8A5F;"></span><span style="width:15%;background:#8A94A0;"></span><span style="width:9%;background:#C0392B;"></span></div>
+                <span class="text-muted" style="font-size:10px;">ポジ 76%</span>
+              </td>
+              <td><div class="ugc-post">「急がない旅ならこだまで十分。ドリンク引換券もついて得した気分」<div class="ugc-post-source">X / 写真付き投稿</div></div></td>
+            </tr>
+            <tr>
+              <td class="fw-600">5</td>
+              <td class="fw-600">子連れ旅</td>
+              <td class="text-right fw-600">124</td>
+              <td class="text-right">+6%</td>
+              <td>
+                <div class="senti-mini"><span style="width:72%;background:#1E8A5F;"></span><span style="width:17%;background:#8A94A0;"></span><span style="width:11%;background:#C0392B;"></span></div>
+                <span class="text-muted" style="font-size:10px;">ポジ 72%</span>
+              </td>
+              <td><div class="ugc-post">「子連れ新幹線、デッキ近くの席を取れたおかげで気持ちがだいぶ楽だった」<div class="ugc-post-source">Instagram / ストーリーズ再投稿</div></div></td>
+            </tr>
+            <tr>
+              <td class="fw-600">6</td>
+              <td class="fw-600">駅弁</td>
+              <td class="text-right fw-600">96</td>
+              <td class="text-right">+15%</td>
+              <td>
+                <div class="senti-mini"><span style="width:88%;background:#1E8A5F;"></span><span style="width:8%;background:#8A94A0;"></span><span style="width:4%;background:#C0392B;"></span></div>
+                <span class="text-muted" style="font-size:10px;">ポジ 88%</span>
+              </td>
+              <td><div class="ugc-post">「旅のスタートは駅弁選びから。今日は迷って2個買い」<div class="ugc-post-source">Instagram / フィード投稿</div></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-muted" style="font-size: 11px; margin-top: 8px;">※ 上位6テーマを表示（全14テーマ）。投稿文・数値はすべて架空。実在の投稿・ユーザーとは無関係。</p>
+    </div>
+
+    <!-- Sentiment analysis -->
+    <div class="section">
+      <h2 class="section-title">ネガポジ分析</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header">全投稿の感情構成（2026-05）</div>
+          <div class="senti-bar mb-16">
+            <div class="senti-pos" style="width: 78%;">ポジティブ 78%</div>
+            <div class="senti-neu" style="width: 14%;">中立 14%</div>
+            <div class="senti-neg" style="width: 8%;">8%</div>
+          </div>
+          <p class="text-muted" style="font-size: 12px;">ポジティブ率は3ヶ月連続で上昇（72% → 75% → 78%）。施策起点投稿に限定するとポジ率 85% と高く、キャンペーンが好意的な発話を生んでいる傾向。</p>
+        </div>
+        <div class="card">
+          <div class="card-header">ネガティブ投稿の主要因（83件の内訳）</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+            <span class="neg-tag">満席・予約しづらい <strong>38%</strong></span>
+            <span class="neg-tag">サイト導線が分かりにくい <strong>27%</strong></span>
+            <span class="neg-tag">価格表示の分かりにくさ <strong>19%</strong></span>
+            <span class="neg-tag">その他 <strong>16%</strong></span>
+          </div>
+          <p class="text-muted" style="font-size: 12px;">ネガ投稿はクリエイティブの問題ではなく、CS・予約UXへの改善インプットとして別ラインで活用。「満席・予約しづらい」は裏返せば需要超過のシグナルでもある。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4-axis connection: the core integration value -->
+    <div class="section">
+      <h2 class="section-title">4軸タグとの接続 — UGCを「次のクリエイティブ」のアイデア源に <span class="badge badge-orange" style="font-size: 11px; vertical-align: middle;">統合価値の核</span></h2>
+      <p class="text-muted mb-16" style="font-size: 13px;">UGC投稿にも広告と同じ4軸（訴求タイプ / セグメント / モチーフ / デザインパターン）タグを自動付与。<strong>UGCでは多いのに広告では薄いモチーフ＝生活者が自発的に語っているのに広告が追いついていない領域</strong>＝次のクリエイティブ候補。</p>
+      <div class="table-wrap table-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="min-width: 130px;">UGCテーマ</th>
+              <th>対応する4軸タグ</th>
+              <th class="text-right">UGC件数（順位）</th>
+              <th class="text-right">UGCポジ率</th>
+              <th class="text-right">広告での扱い</th>
+              <th style="min-width: 180px;">AI示唆</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="gap-row-hot">
+              <td class="fw-600">車窓・富士山</td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-exp">体験・発見</span><span class="axis-tag axis-motif-fuji">富士山・自然</span></div></td>
+              <td class="text-right fw-600">284（1位）</td>
+              <td class="text-right">89%</td>
+              <td class="text-right">体験訴求では構成比 5%<br><span class="text-muted" style="font-size:10px;">（富士山は価格訴求に偏在）</span></td>
+              <td style="font-size: 12px;">UGC最多の「車窓体験」文脈を、体験・発見訴求のクリエイティブとして未活用。次回候補の筆頭。</td>
+            </tr>
+            <tr class="gap-row-hot">
+              <td class="fw-600">推し活遠征</td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-limit">限定・先行</span><span class="axis-tag axis-seg-f20">20-30代女性</span></div></td>
+              <td class="text-right fw-600">176（3位 / +40%）</td>
+              <td class="text-right">81%</td>
+              <td class="text-right fw-600" style="color: var(--text-sub);">未配信</td>
+              <td style="font-size: 12px;">急伸テーマだが広告は未配信。「遠征セット」訴求のバナーをテスト配信する価値が高い。</td>
+            </tr>
+            <tr>
+              <td class="fw-600">旅グルメ / 駅弁</td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-exp">体験・発見</span><span class="axis-tag axis-motif-food">食・グルメ</span></div></td>
+              <td class="text-right fw-600">合算 314（2位相当）</td>
+              <td class="text-right">84〜88%</td>
+              <td class="text-right fw-600" style="color: var(--text-sub);">未配信</td>
+              <td style="font-size: 12px;">広告ヒートマップでも「食・グルメ」モチーフは全訴求で未配信の穴。UGCの熱量が高く、優先度高。</td>
+            </tr>
+            <tr>
+              <td class="fw-600">子連れ旅</td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-exp">体験・発見</span><span class="axis-tag axis-seg-family">ファミリー</span></div></td>
+              <td class="text-right">124（5位）</td>
+              <td class="text-right">72%</td>
+              <td class="text-right">配信中（CVR 4.61%）</td>
+              <td style="font-size: 12px;">広告とUGCの両方で実績あり。UGCの「デッキ近く席」など具体的な安心ポイントをコピーに反映可能。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-muted" style="font-size: 11px; margin-top: 8px;">※ 広告側の数値は <a href="dashboard_ad.html" class="text-accent">広告ダッシュボード</a> の4軸組み合わせ分析と連動。ギャップの全体像は <a href="portfolio.html" class="text-accent">認知ポートフォリオ</a> で。</p>
+    </div>
+
+    <!-- Requirements alert -->
+    <div class="section">
+      <h2 class="section-title">実装にあたっての要件確認事項</h2>
+      <div class="alert alert-info" style="display: block;">
+        <strong>以下4点は推測で埋めず、先方確認が必要（要先方確認）:</strong>
+        <ul style="margin: 8px 0 0; padding-left: 20px; font-size: 13px; line-height: 1.9;">
+          <li><strong>X API の契約状況・費用負担</strong> — 投稿検索には有料プラン（Basic以上）が必要。現契約の有無・プラン・費用負担の整理。</li>
+          <li><strong>Instagram Graph API の権限</strong> — ビジネスアカウント連携の有無、メンション・ハッシュタグ取得が可能な権限範囲。</li>
+          <li><strong>収集対象の範囲</strong> — 自社メンションのみか、指定ハッシュタグを含むか、リプライ・引用まで含むか。</li>
+          <li><strong>収集頻度</strong> — リアルタイム / 日次バッチ / 週次。API費用と鮮度のトレードオフをどこに置くか。</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>atarayo prototype — 仮データ・実装前のイメージです</div>
+    <div>© atarayo Inc. / 最終更新 2026-06-11</div>
+  </footer>
+</div>
+</body>
+</html>

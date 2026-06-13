@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>概要 / 全体像 | JTT 様向け クリエイティブAI 提案モック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/atarayo.css">
+<style>
+/* ── データアーキテクチャ図 ── */
+.arch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg-white); }
+.arch-col { padding: 0; }
+.arch-col-header { padding: 10px 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; text-align: center; }
+.arch-col-header-collect { background: #1A4A7A; color: white; }
+.arch-col-header-process { background: var(--brand-dark); color: white; }
+.arch-col-header-analyze { background: var(--brand-accent); color: white; }
+.arch-col-header-generate { background: #1E8A5F; color: white; }
+.arch-col-body { padding: 14px 12px; display: flex; flex-direction: column; gap: 8px; border-right: 1px solid var(--border); min-height: 260px; }
+.arch-col:last-child .arch-col-body { border-right: none; }
+.arch-node { background: var(--bg-light); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-size: 12px; line-height: 1.4; }
+.arch-node-title { font-weight: 600; color: var(--text-on-light); font-size: 12px; margin-bottom: 2px; }
+.arch-node-sub { font-size: 11px; color: var(--text-sub); }
+.arch-node-accent { border-color: var(--brand-accent); background: #FFF7F0; }
+.arch-node-blue { border-color: #1A4A7A; background: #EBF1F8; }
+.arch-node-green { border-color: #1E8A5F; background: #E8F5EF; }
+.arch-node-dark { border-color: var(--brand-dark); background: #EEF1F5; }
+.arch-arrow-row { display: flex; align-items: center; gap: 0; }
+.arch-arrow { display: flex; align-items: center; justify-content: center; padding: 8px 4px; font-size: 20px; color: var(--text-sub); flex-shrink: 0; }
+.arch-col-arrow { text-align: center; padding: 4px 0; font-size: 16px; color: var(--text-sub); }
+.tech-tag { display: inline-block; background: var(--bg-light); border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; font-size: 10px; color: var(--text-sub); margin-top: 3px; margin-right: 3px; }
+.tech-tag-gcp { background: #E8F0FE; border-color: #4285F4; color: #174EA6; }
+.tech-tag-google { background: #FEF3F2; border-color: #EA4335; color: #8B2000; }
+.tech-tag-llm { background: #FEF7E0; border-color: #FBBC04; color: #7A4F00; }
+.tech-tag-line { background: #E8F5EA; border-color: #06C755; color: #045A2B; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a href="index.html" class="logo">atarayo</a>
+    <div class="header-divider"></div>
+    <div class="header-context"><strong>JTT</strong> 様向け クリエイティブAI 提案モック</div>
+    <div class="header-right">2026-05-24 デモ向け</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-section">画面一覧</div>
+    <a href="index.html" class="sidebar-item is-active">概要 / 全体像</a>
+    <a href="dashboard_ad.html" class="sidebar-item">広告ダッシュボード</a>
+    <a href="dashboard_line.html" class="sidebar-item">LINE ダッシュボード</a>
+    <a href="dashboard_mail.html" class="sidebar-item">メール ダッシュボード</a>
+    <a href="dashboard_ugc.html" class="sidebar-item">UGC ダッシュボード</a>
+    <a href="portfolio.html" class="sidebar-item">認知ポートフォリオ</a>
+    <a href="ai_planning.html" class="sidebar-item">企画→生成 AI</a>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">JTT 様 — マーケティングクリエイティブ統合管理（クリエイティブAI + UGC分析）</h1>
+    <p class="page-subtitle">
+      広告・LINE・メール・UGCを同じ4軸の構造データとして横断分析。「なぜ効いたか分からない」「UGCの内容把握が追いつかない」「価格訴求が勝ち続ける」を、評価エージェント＋認知ポートフォリオ＋企画AIの一つのループで解消する。
+    </p>
+
+    <div class="alert alert-info">
+      <strong>このモックの狙い:</strong> UX 3層構造と技術アーキテクチャを画面イメージで先方と握る。デモ本番ではダッシュボード層を実データで実体化予定。
+    </div>
+
+    <!-- UX 3-layer -->
+    <div class="section">
+      <h2 class="section-title">UX 3層構造</h2>
+      <div class="grid grid-3">
+        <a href="dashboard_ad.html" class="card" style="display: block; color: inherit; cursor: pointer;">
+          <div class="card-header">
+            <span><span class="badge badge-orange">第1層</span> チャネル別</span>
+            <span class="text-muted" style="font-size: 12px;">日常運用</span>
+          </div>
+          <p style="font-size: 13px; margin-bottom: 12px;">広告・LINE・メール・UGC、それぞれの「現状のクリエイティブ・投稿が4軸でどう評価されているか」を見る。</p>
+          <p class="card-subtitle">代表画面: <span class="text-accent fw-600">広告ダッシュボード →</span></p>
+        </a>
+        <a href="portfolio.html" class="card" style="display: block; color: inherit; cursor: pointer;">
+          <div class="card-header">
+            <span><span class="badge badge-orange">第2層</span> 認知ポートフォリオ</span>
+            <span class="text-muted" style="font-size: 12px;">月次の経営判断</span>
+          </div>
+          <p style="font-size: 13px; margin-bottom: 12px;">4軸（訴求タイプ × セグメント × モチーフ × デザインパターン）で「いま何が偏っているか」を可視化。</p>
+          <p class="card-subtitle">代表画面: <span class="text-accent fw-600">認知ポートフォリオ →</span></p>
+        </a>
+        <a href="ai_planning.html" class="card" style="display: block; color: inherit; cursor: pointer;">
+          <div class="card-header">
+            <span><span class="badge badge-orange">第3層</span> 企画→生成</span>
+            <span class="text-muted" style="font-size: 12px;">キャンペーン設計</span>
+          </div>
+          <p style="font-size: 13px; margin-bottom: 12px;">偏り分析をもとに「次に作るべきクリエイティブ」をAIと設計し、ChatGPT Image2へのプロンプトまで橋渡し。</p>
+          <p class="card-subtitle">代表画面: <span class="text-accent fw-600">企画→生成 AI →</span></p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Technical Architecture -->
+    <div class="section">
+      <h2 class="section-title">技術アーキテクチャ — どうやって実現するか</h2>
+      <p class="text-muted mb-16" style="font-size: 13px;">クリエイティブをGoogleドライブに蓄積 → LLMが構造データ化 → 各広告データと統合 → GCP上でダッシュボード化。ループを回すことで分析精度が上がっていく。</p>
+
+      <div class="arch-grid">
+        <!-- Col 1: Collect -->
+        <div class="arch-col">
+          <div class="arch-col-header arch-col-header-collect">① データ収集・蓄積</div>
+          <div class="arch-col-body">
+            <div class="arch-node arch-node-blue">
+              <div class="arch-node-title">📁 Googleドライブ</div>
+              <div class="arch-node-sub">クリエイティブ素材（画像・動画）をチーム共有フォルダで一元管理。配信済みファイルにメタ情報をつけて格納。</div>
+              <span class="tech-tag">Google Drive API</span>
+            </div>
+            <div class="arch-col-arrow">↓ 自動バッチ取込</div>
+            <div class="arch-node arch-node-dark">
+              <div class="arch-node-title">📊 各媒体 管理画面</div>
+              <div class="arch-node-sub">Meta / Google / YouTube から広告実績CSVをエクスポート。LINE OA ManagerからLINE配信実績を取得。メール配信ツール（例: MailPublisher）から開封・クリックデータを取得。</div>
+              <span class="tech-tag tech-tag-google">Meta Ads</span>
+              <span class="tech-tag tech-tag-google">Google Ads</span>
+              <span class="tech-tag tech-tag-line">LINE OA</span>
+            </div>
+            <div class="arch-col-arrow">＋</div>
+            <div class="arch-node arch-node-blue">
+              <div class="arch-node-title">📱 X API / Instagram Graph API</div>
+              <div class="arch-node-sub">自社メンション・指定ハッシュタグの投稿とコメントを自動収集。契約プラン・取得権限の範囲は要先方確認。</div>
+              <span class="tech-tag">X API</span>
+              <span class="tech-tag">IG Graph API</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 2: LLM Structure -->
+        <div class="arch-col">
+          <div class="arch-col-header arch-col-header-process">② LLM構造データ化</div>
+          <div class="arch-col-body">
+            <div class="arch-node arch-node-dark">
+              <div class="arch-node-title">☁️ GCS（Cloud Storage）</div>
+              <div class="arch-node-sub">Googleドライブから自動同期したクリエイティブ画像ファイルを格納。クリエイティブIDで管理。</div>
+              <span class="tech-tag tech-tag-gcp">GCP</span>
+            </div>
+            <div class="arch-col-arrow">↓ 画像解析</div>
+            <div class="arch-node arch-node-accent">
+              <div class="arch-node-title">🤖 Vertex AI（Gemini）</div>
+              <div class="arch-node-sub">クリエイティブ画像をLLMに渡し、4軸タグを自動生成：<br>
+                訴求タイプ / セグメント / モチーフ / デザインパターン + ファネル段階推定<br>
+                UGC投稿はテキスト＋画像を解析し、テーマ分類・ネガポジ・4軸タグを付与。広告と同じ構造データとして扱う。</div>
+              <span class="tech-tag tech-tag-llm">Gemini Vision</span>
+            </div>
+            <div class="arch-col-arrow">↓ タグ書き込み</div>
+            <div class="arch-node arch-node-dark">
+              <div class="arch-node-title">🗄 BigQuery</div>
+              <div class="arch-node-sub">クリエイティブID × 4軸タグ × 各媒体実績（Imp / Click / CV）を統合。クリエイティブIDをキーにjoinして分析テーブルを作成。</div>
+              <span class="tech-tag tech-tag-gcp">BigQuery</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 3: Analyze / Visualize -->
+        <div class="arch-col">
+          <div class="arch-col-header arch-col-header-analyze">③ 分析・可視化</div>
+          <div class="arch-col-body">
+            <div class="arch-node arch-node-accent">
+              <div class="arch-node-title">📊 Looker Studio</div>
+              <div class="arch-node-sub">BigQueryに接続。<br>
+                <strong>第1層:</strong> チャネル別ダッシュボード（広告/LINE/メール）<br>
+                <strong>第2層:</strong> 4軸 × ファネルのクロス集計ヒートマップ（認知ポートフォリオ）</div>
+              <span class="tech-tag tech-tag-google">Looker Studio</span>
+            </div>
+            <div class="arch-col-arrow">↓ 偏り検出</div>
+            <div class="arch-node arch-node-dark">
+              <div class="arch-node-title">🔍 組み合わせ分析</div>
+              <div class="arch-node-sub">「訴求タイプ×モチーフ」「セグメント×デザインパターン」など4軸の掛け合わせで、CTR・CVR・CPA が最も改善する組み合わせを特定。未配信パターンの発見も。</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 4: Generate / Loop -->
+        <div class="arch-col">
+          <div class="arch-col-header arch-col-header-generate">④ 企画・生成ループ</div>
+          <div class="arch-col-body">
+            <div class="arch-node arch-node-accent">
+              <div class="arch-node-title">💬 企画AIエージェント</div>
+              <div class="arch-node-sub">偏り分析をもとに「次に作るべき4軸の組み合わせ」を提案。ターゲット設定 / コピー案 / 構図イメージをセットで生成。</div>
+            </div>
+            <div class="arch-col-arrow">↓ プロンプト生成</div>
+            <div class="arch-node" style="border-color: #FBBC04; background: #FEF7E0;">
+              <div class="arch-node-title">🎨 ChatGPT Image2</div>
+              <div class="arch-node-sub">AIエージェントが出力したプロンプトをデザイナーがImage2に投入。画像生成は手動（モデルは固定しない）。生成後はGoogleドライブに格納してループ継続。</div>
+              <span class="tech-tag tech-tag-llm">手動実行</span>
+            </div>
+            <div class="arch-col-arrow">↓ Googleドライブへ蓄積</div>
+            <div class="arch-node arch-node-green">
+              <div class="arch-node-title">🔄 PDCAループ完結</div>
+              <div class="arch-node-sub">新クリエイティブを配信 → 実績がBigQueryに蓄積 → 次回の分析精度が上がる。ループが回るほどタグ付けの妥当性も検証・改善できる。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pipeline flow summary (simplified) -->
+    <div class="section">
+      <h2 class="section-title">処理パイプライン — データの流れ</h2>
+      <div class="mermaid-wrap">
+        <div class="flow-row">
+          <div class="flow-step flow-step-input">Googleドライブ<br><span style="font-size:10px;opacity:0.7;">クリエイティブ素材</span></div>
+          <div class="flow-row-arrow">→</div>
+          <div class="flow-step flow-step-ai">Vertex AI (Gemini)<br><span style="font-size:10px;opacity:0.8;">4軸タグ付け自動生成</span></div>
+          <div class="flow-row-arrow">→</div>
+          <div class="flow-step flow-step-input">各媒体 管理画面<br><span style="font-size:10px;opacity:0.7;">実績CSVエクスポート</span></div>
+          <div class="flow-row-arrow">→</div>
+          <div class="flow-step flow-step-ai">BigQuery<br><span style="font-size:10px;opacity:0.8;">クリエイティブID×タグ×実績 統合</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-step flow-step-input">X / Instagram<br><span style="font-size:10px;opacity:0.7;">自社メンション・ハッシュタグ収集</span></div>
+          <div class="flow-row-arrow">→</div>
+          <div class="flow-step flow-step-ai">Gemini<br><span style="font-size:10px;opacity:0.8;">テーマ分類・ネガポジ・4軸タグ</span></div>
+          <div class="flow-row-arrow">→</div>
+          <div class="flow-step flow-step-ai">BigQuery統合<br><span style="font-size:10px;opacity:0.8;">広告と同じ構造データに合流</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-step flow-step-out" style="visibility:hidden;">s</div>
+          <div class="flow-row-arrow" style="visibility:hidden;">→</div>
+          <div class="flow-step flow-step-out" style="visibility:hidden;">s</div>
+          <div class="flow-row-arrow" style="visibility:hidden;">→</div>
+          <div class="flow-step flow-step-out" style="visibility:hidden;">s</div>
+          <div class="flow-row-arrow">↓</div>
+          <div class="flow-step flow-step-layer">Looker Studio<br><span style="font-size:10px;opacity:0.9;">第1層・第2層ダッシュボード</span></div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-step flow-step-out">Googleドライブへ蓄積<br><span style="font-size:10px;opacity:0.7;">→ 次サイクルへ</span></div>
+          <div class="flow-row-arrow">←</div>
+          <div class="flow-step" style="background:#FEF7E0; border-color:#FBBC04;">ChatGPT Image2<br><span style="font-size:10px;opacity:0.7;">デザイナーが手動生成</span></div>
+          <div class="flow-row-arrow">←</div>
+          <div class="flow-step flow-step-layer">企画AIエージェント<br><span style="font-size:10px;opacity:0.9;">プロンプト案 生成</span></div>
+          <div class="flow-row-arrow">←</div>
+          <div class="flow-step flow-step-layer">認知ポートフォリオ<br><span style="font-size:10px;opacity:0.9;">偏り・未配信パターン 検出</span></div>
+        </div>
+        <p class="mermaid-caption">クリエイティブをGoogleドライブに蓄積、UGCをX/Instagramから自動収集 → LLMが4軸でタグ付け（UGCはテーマ分類・ネガポジも） → BigQueryで実績と統合 → Looker Studioで可視化 → 企画AIが次クリエイティブ提案 → Image2で生成 → ドライブに戻す</p>
+      </div>
+    </div>
+
+    <!-- Pain → solution -->
+    <div class="section">
+      <h2 class="section-title">いま起きている構造課題 → 提案アプローチ</h2>
+      <div class="compare">
+        <div class="compare-col compare-col-asis">
+          <h4>現状（5/20 共有内容より）</h4>
+          <ul>
+            <li>・ なぜ良かった／悪かったかが分かりにくい</li>
+            <li>・ セグメントに合うクリエイティブが見えない</li>
+            <li>・ 勝ちクリエイティブの使い回しで訴求が画一化</li>
+            <li>・ 認知ファネルごとの役割整理がない</li>
+            <li>・ エンゲージメント単価評価で「価格訴求」が勝ち続ける構造</li>
+            <li>・ 認知層は「買ったか」で評価 → 温度高い層にしか刺さらない疑い</li>
+            <li>・ UGCの内容把握が手作業で追いつかず、施策効果が測れない</li>
+          </ul>
+        </div>
+        <div class="compare-arrow">→</div>
+        <div class="compare-col compare-col-tobe">
+          <h4>提案アプローチ</h4>
+          <ul>
+            <li>・ LLMが訴求タイプ/セグメント/モチーフ/デザインパターンを自動タグ付け</li>
+            <li>・ 4軸の組み合わせ分析でどのパターンが効くかを可視化</li>
+            <li>・ 認知ポートフォリオで「偏り」と「未配信パターン」を検出</li>
+            <li>・ チャネル別役割定義（広告=認知/LINE=育成/メール=刈取）</li>
+            <li>・ ファネル段階別KPI（認知層は接触深度・想起率）</li>
+            <li>・ 企画AIが「次に作るべき4軸組み合わせ」をプロンプト付きで提案</li>
+            <li>・ UGCを自動収集・分類し、広告と同じ4軸で統合分析。UGC発の訴求をクリエイティブ生成に還流</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4-axis definition (updated) -->
+    <div class="section">
+      <h2 class="section-title">分析の「4軸」— クリエイティブを構造データとして見る</h2>
+      <p class="text-muted mb-16" style="font-size: 13px;">クリエイティブ1点をこの4軸でタグ付けすることで、「どの組み合わせが数値を出しているか」を定量的に発見できる。未配信パターンの発見が次のクリエイティブアイデアになる。</p>
+      <div class="grid grid-4">
+        <div class="card" style="border-top: 3px solid var(--brand-accent);">
+          <div class="card-header" style="font-size: 14px;">① 訴求タイプ</div>
+          <p class="text-muted" style="font-size: 12px; margin-bottom: 10px;">「何を伝えようとしているか」の軸</p>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span class="badge badge-orange" style="width: fit-content;">価格・割引</span>
+            <span class="badge badge-blue" style="width: fit-content;">体験・発見</span>
+            <span class="badge badge-gray" style="width: fit-content;">限定・先行</span>
+            <span class="badge badge-green" style="width: fit-content;">安心・信頼</span>
+            <span class="badge badge-gray" style="width: fit-content;">新規性・旬</span>
+          </div>
+        </div>
+        <div class="card" style="border-top: 3px solid #1A4A7A;">
+          <div class="card-header" style="font-size: 14px;">② セグメント</div>
+          <p class="text-muted" style="font-size: 12px; margin-bottom: 10px;">「誰に向けて作っているか」の軸</p>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span class="badge badge-blue" style="width: fit-content;">ファミリー</span>
+            <span class="badge badge-blue" style="width: fit-content;">20-30代女性</span>
+            <span class="badge badge-blue" style="width: fit-content;">カップル</span>
+            <span class="badge badge-blue" style="width: fit-content;">シニア</span>
+            <span class="badge badge-blue" style="width: fit-content;">鉄道ファン</span>
+          </div>
+        </div>
+        <div class="card" style="border-top: 3px solid #C58A1A;">
+          <div class="card-header" style="font-size: 14px;">③ モチーフ</div>
+          <p class="text-muted" style="font-size: 12px; margin-bottom: 10px;">「何を主役に見せているか」の軸</p>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span class="badge" style="background:#FEF7E0; color:#7A5500; width: fit-content;">富士山・自然</span>
+            <span class="badge" style="background:#FEF7E0; color:#7A5500; width: fit-content;">新幹線・乗り物</span>
+            <span class="badge" style="background:#FEF7E0; color:#7A5500; width: fit-content;">城・観光地</span>
+            <span class="badge" style="background:#FEF7E0; color:#7A5500; width: fit-content;">食・グルメ</span>
+            <span class="badge" style="background:#FEF7E0; color:#7A5500; width: fit-content;">伝統文化・アート</span>
+          </div>
+        </div>
+        <div class="card" style="border-top: 3px solid #1E8A5F;">
+          <div class="card-header" style="font-size: 14px;">④ デザインパターン</div>
+          <p class="text-muted" style="font-size: 12px; margin-bottom: 10px;">「どんな見た目で表現したか」の軸</p>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span class="badge badge-green" style="width: fit-content;">フォト重視</span>
+            <span class="badge badge-green" style="width: fit-content;">テキスト大きめ</span>
+            <span class="badge badge-green" style="width: fit-content;">コラージュ</span>
+            <span class="badge badge-green" style="width: fit-content;">和風イラスト</span>
+            <span class="badge badge-green" style="width: fit-content;">シンプルバナー</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>atarayo prototype — 仮データ・実装前のイメージです</div>
+    <div>© atarayo Inc. / 最終更新 2026-05-24</div>
+  </footer>
+</div>
+</body>
+</html>

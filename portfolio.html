@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>認知ポートフォリオ | JTT 様向け クリエイティブAI 提案モック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/atarayo.css">
+<style>
+/* === axis tags (shared with dashboards) === */
+.axis-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 10px; white-space: nowrap; }
+.axis-appeal-price   { background: #FFF3E0; color: #E65100; }
+.axis-appeal-exp     { background: #E8F5E9; color: #1B5E20; }
+.axis-appeal-limited { background: #EDE7F6; color: #4527A0; }
+.axis-appeal-safe    { background: #E3F2FD; color: #0D47A1; }
+.axis-seg-f2030      { background: #FCE4EC; color: #880E4F; }
+.axis-seg-fam        { background: #F3E5F5; color: #4A148C; }
+.axis-seg-senior     { background: #E8EAF6; color: #1A237E; }
+.axis-seg-biz        { background: #E0F2F1; color: #004D40; }
+.axis-motif-kyoto    { background: #FBE9E7; color: #BF360C; }
+.axis-motif-nagoya   { background: #F9FBE7; color: #558B2F; }
+.axis-motif-tokai    { background: #E1F5FE; color: #01579B; }
+.axis-motif-season   { background: #F3E5F5; color: #6A1B9A; }
+.axis-design-photo   { background: #FFF8E1; color: #F57F17; }
+.axis-design-illust  { background: #E0F7FA; color: #006064; }
+.axis-design-type    { background: #FAFAFA; color: #212121; border: 1px solid #E0E0E0; }
+.axis-design-collage { background: #EDE7F6; color: #311B92; }
+.axis-motif-fuji     { background: #E1F5FE; color: #01579B; }
+.axis-motif-food     { background: #FFF8E1; color: #7A5500; }
+.axis-appeal-limit   { background: #EDE7F6; color: #4527A0; }
+
+/* UGC gap table */
+.gap-row-hot td { background: #FFF7F0; }
+.ugc-pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #FCE4EC; color: #880E4F; }
+
+/* === portfolio heatmap labels === */
+.heatmap-row-label { font-size: 12px; font-weight: 600; line-height: 1.3; }
+
+/* === channel icon pills === */
+.ch-pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
+.ch-ad   { background: #E3F2FD; color: #0D47A1; }
+.ch-line { background: #E8F5E9; color: #1B5E20; }
+.ch-mail { background: #FFF3E0; color: #E65100; }
+
+/* === cross-channel heatmap (5 cols = funnel stages) === */
+.heatmap.hm-5col { grid-template-columns: 130px repeat(5, 1fr); }
+.heatmap.hm-6col { grid-template-columns: 130px repeat(5, 1fr); }
+
+/* === insight card with axis tag group === */
+.insight-axis-group { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a href="index.html" class="logo">atarayo</a>
+    <div class="header-divider"></div>
+    <div class="header-context"><strong>JTT</strong> 様向け クリエイティブAI 提案モック</div>
+    <div class="header-right">認知ポートフォリオ — 第2層</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-section">画面一覧</div>
+    <a href="index.html" class="sidebar-item">概要 / 全体像</a>
+    <a href="dashboard_ad.html" class="sidebar-item">広告ダッシュボード</a>
+    <a href="dashboard_line.html" class="sidebar-item">LINE ダッシュボード</a>
+    <a href="dashboard_mail.html" class="sidebar-item">メール ダッシュボード</a>
+    <a href="dashboard_ugc.html" class="sidebar-item">UGC ダッシュボード</a>
+    <a href="portfolio.html" class="sidebar-item is-active">認知ポートフォリオ</a>
+    <a href="ai_planning.html" class="sidebar-item">企画→生成 AI</a>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">認知ポートフォリオ <span class="badge badge-orange" style="font-size: 12px; vertical-align: middle;">第2層</span></h1>
+    <p class="page-subtitle">「いま何が偏っているか」を 訴求タイプ・セグメント・モチーフ・デザインパターン の4軸 × ファネル段階で一望。月次の経営判断・キャンペーン設計の起点に。</p>
+
+    <div class="filter-bar">
+      <select class="filter-select">
+        <option>期間: 2026-04</option>
+        <option>2026-03</option>
+        <option>過去3ヶ月平均</option>
+      </select>
+      <select class="filter-select">
+        <option>チャネル: 全チャネル合算</option>
+        <option>広告</option>
+        <option>LINE</option>
+        <option>メール</option>
+      </select>
+      <select class="filter-select">
+        <option>指標: インプレッション構成</option>
+        <option>CV構成</option>
+        <option>CTR</option>
+        <option>CVR</option>
+      </select>
+    </div>
+
+    <!-- Heatmap 1: 訴求タイプ × ファネル段階 -->
+    <div class="section">
+      <h2 class="section-title">① 訴求タイプ × ファネル段階（2026-04 / 全チャネル / インプレッション構成）</h2>
+      <p class="text-muted mb-16" style="font-size: 13px;">セルの濃さ＝インプレッション構成比。理想は<strong>各ファネル段階で訴求タイプが多様化</strong>している状態。右下への偏りが課題の典型パターン。</p>
+
+      <div class="card">
+        <div class="heatmap hm-5col mb-16" style="grid-template-columns: 140px repeat(5, 1fr);">
+          <div class="heatmap-corner"></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>認知</strong></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>興味</strong></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>検討</strong></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>決定</strong></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>継続</strong></div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-appeal-price">価格・割引</span></div>
+          <div class="heatmap-cell h-low">2%</div>
+          <div class="heatmap-cell h-mid">8%</div>
+          <div class="heatmap-cell h-mid-2">14%</div>
+          <div class="heatmap-cell h-very-high">28%</div>
+          <div class="heatmap-cell h-mid-2">10%</div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-appeal-exp">体験・発見</span></div>
+          <div class="heatmap-cell h-mid">6%</div>
+          <div class="heatmap-cell h-mid">7%</div>
+          <div class="heatmap-cell h-low">4%</div>
+          <div class="heatmap-cell h-low">3%</div>
+          <div class="heatmap-cell h-low">1%</div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-appeal-safe">安心・信頼</span></div>
+          <div class="heatmap-cell h-low">1%</div>
+          <div class="heatmap-cell h-low">2%</div>
+          <div class="heatmap-cell h-mid">5%</div>
+          <div class="heatmap-cell h-low">2%</div>
+          <div class="heatmap-cell h-low">1%</div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-appeal-limited">限定・先行</span></div>
+          <div class="heatmap-cell h-low">2%</div>
+          <div class="heatmap-cell h-low">2%</div>
+          <div class="heatmap-cell h-low">1%</div>
+          <div class="heatmap-cell h-low">1%</div>
+          <div class="heatmap-cell h-low" style="background:#F5F5F5; color:#BDBDBD;">0%</div>
+        </div>
+        <p class="text-muted" style="font-size: 12px;">※ 数値はインプレッション構成比（全チャネル合算）。合計100%。</p>
+      </div>
+    </div>
+
+    <!-- Heatmap 2: セグメント × ファネル段階 -->
+    <div class="section">
+      <h2 class="section-title">② セグメント × ファネル段階（2026-04 / 全チャネル / CV構成）</h2>
+      <p class="text-muted mb-16" style="font-size: 13px;">CV がどのセグメント × ファネル段階に集中しているかを確認。空白セルは「クリエイティブが存在しない」または「到達できていない」状態。</p>
+
+      <div class="card">
+        <div class="heatmap mb-16" style="grid-template-columns: 160px repeat(5, 1fr);">
+          <div class="heatmap-corner"></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>認知</strong></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>興味</strong></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>検討</strong></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>決定</strong></div>
+          <div class="heatmap-label" style="justify-content: center;"><strong>継続</strong></div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-seg-f2030">20〜30代女性</span></div>
+          <div class="heatmap-cell h-mid">9%</div>
+          <div class="heatmap-cell h-mid-2">12%</div>
+          <div class="heatmap-cell h-mid">7%</div>
+          <div class="heatmap-cell h-high">18%</div>
+          <div class="heatmap-cell h-low">3%</div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-seg-fam">30〜40代ファミリー</span></div>
+          <div class="heatmap-cell h-low">4%</div>
+          <div class="heatmap-cell h-mid">6%</div>
+          <div class="heatmap-cell h-mid-2">11%</div>
+          <div class="heatmap-cell h-high">16%</div>
+          <div class="heatmap-cell h-mid">5%</div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-seg-senior">50代以上</span></div>
+          <div class="heatmap-cell h-low">2%</div>
+          <div class="heatmap-cell h-low">3%</div>
+          <div class="heatmap-cell h-low">4%</div>
+          <div class="heatmap-cell h-mid">5%</div>
+          <div class="heatmap-cell h-low" style="background:#F5F5F5; color:#BDBDBD;">未配信</div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-seg-biz">ビジネス利用</span></div>
+          <div class="heatmap-cell h-low" style="background:#F5F5F5; color:#BDBDBD;">未配信</div>
+          <div class="heatmap-cell h-low" style="background:#F5F5F5; color:#BDBDBD;">未配信</div>
+          <div class="heatmap-cell h-low">2%</div>
+          <div class="heatmap-cell h-low">3%</div>
+          <div class="heatmap-cell h-low">1%</div>
+        </div>
+        <p class="text-muted" style="font-size: 12px;">※ 数値はCV構成比。「未配信」＝当該軸組み合わせのクリエイティブが存在しない。</p>
+      </div>
+    </div>
+
+    <!-- Heatmap 3: モチーフ × デザインパターン -->
+    <div class="section">
+      <h2 class="section-title">③ モチーフ × デザインパターン（2026-04 / 全チャネル / CTR）</h2>
+      <p class="text-muted mb-16" style="font-size: 13px;">どのモチーフ × デザインパターン組み合わせが高 CTR か。空白＝未試行の組み合わせ → 次のクリエイティブ仮説候補。</p>
+
+      <div class="card">
+        <div class="heatmap mb-16" style="grid-template-columns: 140px repeat(4, 1fr);">
+          <div class="heatmap-corner"></div>
+          <div class="heatmap-label" style="justify-content: center;"><span class="axis-tag axis-design-photo">写真主体</span></div>
+          <div class="heatmap-label" style="justify-content: center;"><span class="axis-tag axis-design-illust">イラスト</span></div>
+          <div class="heatmap-label" style="justify-content: center;"><span class="axis-tag axis-design-type">テキスト強調</span></div>
+          <div class="heatmap-label" style="justify-content: center;"><span class="axis-tag axis-design-collage">コラージュ</span></div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-motif-kyoto">京都・寺社仏閣</span></div>
+          <div class="heatmap-cell h-high">1.82%</div>
+          <div class="heatmap-cell h-very-high">2.41%</div>
+          <div class="heatmap-cell h-mid">0.94%</div>
+          <div class="heatmap-cell h-low" style="background:#F5F5F5; color:#BDBDBD;">未試行</div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-motif-nagoya">名古屋・東海</span></div>
+          <div class="heatmap-cell h-mid-2">1.34%</div>
+          <div class="heatmap-cell h-low" style="background:#F5F5F5; color:#BDBDBD;">未試行</div>
+          <div class="heatmap-cell h-mid">0.87%</div>
+          <div class="heatmap-cell h-mid">1.12%</div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-motif-tokai">新幹線・移動</span></div>
+          <div class="heatmap-cell h-mid">0.96%</div>
+          <div class="heatmap-cell h-low" style="background:#F5F5F5; color:#BDBDBD;">未試行</div>
+          <div class="heatmap-cell h-mid-2">1.28%</div>
+          <div class="heatmap-cell h-low" style="background:#F5F5F5; color:#BDBDBD;">未試行</div>
+
+          <div class="heatmap-label"><span class="axis-tag axis-motif-season">季節・イベント</span></div>
+          <div class="heatmap-cell h-high">1.74%</div>
+          <div class="heatmap-cell h-low" style="background:#F5F5F5; color:#BDBDBD;">未試行</div>
+          <div class="heatmap-cell h-low">0.62%</div>
+          <div class="heatmap-cell h-mid-2">1.19%</div>
+        </div>
+        <p class="text-muted" style="font-size: 12px;">※ 数値はCTR。「未試行」＝その組み合わせのクリエイティブが存在しない → 次施策の仮説候補。</p>
+      </div>
+    </div>
+
+    <!-- UGC × Ad gap -->
+    <div class="section">
+      <h2 class="section-title">UGC × 広告クリエイティブのギャップ <span class="badge badge-orange" style="font-size: 11px; vertical-align: middle;">UGC連携</span></h2>
+      <p class="text-muted mb-16" style="font-size: 13px;">生活者が自発的に語っているテーマ（UGC）と、広告が配信しているテーマの差分。<strong>UGCで多い × 広告で薄い ＝ 需要があるのに供給していない領域</strong>＝次のクリエイティブ候補。</p>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="min-width: 120px;">UGCテーマ</th>
+                <th class="text-right">UGC件数 / 月</th>
+                <th class="text-right">UGCポジ率</th>
+                <th class="text-right">広告Imp構成比</th>
+                <th style="min-width: 200px;">AI示唆</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="gap-row-hot">
+                <td class="fw-600">車窓・富士山 <span class="ugc-pill">UGC 1位</span></td>
+                <td class="text-right fw-600">284</td>
+                <td class="text-right">89%</td>
+                <td class="text-right fw-600" style="color: var(--brand-accent);">5%<br><span class="text-muted" style="font-size:10px; font-weight:400;">（体験・発見訴求での活用分）</span></td>
+                <td style="font-size: 12px;">UGCポジ率89%だが広告では未活用 → <span class="axis-tag axis-appeal-exp">体験・発見</span> × <span class="axis-tag axis-motif-fuji">富士山・車窓</span> のクリエイティブを次回候補に</td>
+              </tr>
+              <tr class="gap-row-hot">
+                <td class="fw-600">推し活遠征 <span class="ugc-pill">+40%</span></td>
+                <td class="text-right fw-600">176</td>
+                <td class="text-right">81%</td>
+                <td class="text-right fw-600" style="color: var(--text-sub);">未配信</td>
+                <td style="font-size: 12px;">急伸テーマ。<span class="axis-tag axis-appeal-limit">限定・先行</span> × <span class="axis-tag axis-seg-f2030">20〜30代女性</span> の「遠征セット」バナーをテスト配信候補に</td>
+              </tr>
+              <tr>
+                <td class="fw-600">旅グルメ / 駅弁</td>
+                <td class="text-right fw-600">314</td>
+                <td class="text-right">84〜88%</td>
+                <td class="text-right fw-600" style="color: var(--text-sub);">未配信</td>
+                <td style="font-size: 12px;">広告の組み合わせ分析でも <span class="axis-tag axis-motif-food">食・グルメ</span> モチーフは全訴求で未配信の穴。UGC熱量が高く優先度高</td>
+              </tr>
+              <tr>
+                <td class="fw-600">子連れ旅</td>
+                <td class="text-right">124</td>
+                <td class="text-right">72%</td>
+                <td class="text-right">9%</td>
+                <td style="font-size: 12px;">広告・UGC双方で実績あり。UGCの具体的な安心ポイント（席選び等）をコピー改善に反映</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-muted" style="font-size: 11px; margin-top: 12px;">※ UGC側の詳細は <a href="dashboard_ugc.html" class="text-accent">UGC ダッシュボード</a> 参照。数値はすべて仮データ。</p>
+      </div>
+    </div>
+
+    <!-- AI insights -->
+    <div class="section">
+      <h2 class="section-title">AIによる偏り検出と仮説</h2>
+      <div class="grid grid-2">
+        <div class="card" style="border-left: 4px solid var(--error);">
+          <div class="card-header">
+            <span><span class="status-dot status-dot-red"></span> 偏り 1: 認知層へのリーチ不足</span>
+          </div>
+          <div class="insight-axis-group">
+            <span class="axis-tag axis-appeal-exp">体験・発見</span>
+            <span>×</span>
+            <span class="axis-tag axis-seg-f2030">20〜30代女性</span>
+            <span>×</span>
+            <strong style="font-size: 11px;">認知段階</strong>
+          </div>
+          <p style="font-size: 13px;">
+            認知段階の全訴求合計が <strong>11%</strong> にとどまる。「価格・割引×決定（28%）」への依存が強く、上流の入口形成が手薄。体験・発見×認知は 6% 止まり。
+          </p>
+          <p class="text-muted mt-16" style="font-size: 12px;"><strong>影響:</strong> 既存顧客の枯渇リスク / 新規 CAC の長期上昇懸念</p>
+          <p class="text-muted" style="font-size: 12px;"><strong>提案:</strong> 京都・イラスト（CTR 2.41%）の組み合わせを認知段階に投下。体験・発見 訴求でブランド認知キャンペーン設計</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--warning);">
+          <div class="card-header">
+            <span><span class="status-dot status-dot-orange"></span> 偏り 2: 体験・発見の検討〜決定で失速</span>
+          </div>
+          <div class="insight-axis-group">
+            <span class="axis-tag axis-appeal-exp">体験・発見</span>
+            <span>×</span>
+            <strong style="font-size: 11px;">検討・決定段階</strong>
+          </div>
+          <p style="font-size: 13px;">
+            体験・発見訴求は認知（6%）・興味（7%）で立ち上がるも検討段階で <strong>4%</strong> に落ちる。決定段階では <strong>3%</strong> でほぼ消える。
+          </p>
+          <p class="text-muted mt-16" style="font-size: 12px;"><strong>仮説:</strong> 体験コンテンツが「行ってみたい」止まりで、具体的な比較・決定材料に変換できていない</p>
+          <p class="text-muted" style="font-size: 12px;"><strong>提案:</strong> <span class="axis-tag axis-appeal-exp">体験・発見</span> × 検討段階 に「比較バンドル」型（同価格帯3コース提示等）を追加。季節×写真 モチーフは CTR 1.74% と有望</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--brand-accent);">
+          <div class="card-header">
+            <span><span class="status-dot status-dot-orange"></span> 偏り 3: 50代以上・継続フェーズが未開拓</span>
+          </div>
+          <div class="insight-axis-group">
+            <span class="axis-tag axis-seg-senior">50代以上</span>
+            <span>×</span>
+            <strong style="font-size: 11px;">継続段階</strong>
+            <span>=</span>
+            <strong style="font-size: 11px; color: #BDBDBD;">未配信</strong>
+          </div>
+          <p style="font-size: 13px;">
+            50代以上への継続段階クリエイティブが <strong>全チャネルで存在しない</strong>。認知〜決定まで CV は存在するが、リピート訴求が設計されていない。
+          </p>
+          <p class="text-muted mt-16" style="font-size: 12px;"><strong>提案:</strong> 安心・信頼 訴求 × テキスト強調（CTR 1.28%）でリピーター向けメール/LINE シナリオ設計</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--success);">
+          <div class="card-header">
+            <span><span class="status-dot status-dot-green"></span> 強み: 京都×イラストの未活用ポテンシャル</span>
+          </div>
+          <div class="insight-axis-group">
+            <span class="axis-tag axis-motif-kyoto">京都・寺社仏閣</span>
+            <span>×</span>
+            <span class="axis-tag axis-design-illust">イラスト</span>
+          </div>
+          <p style="font-size: 13px;">
+            モチーフ × デザインパターン のヒートマップで <strong>CTR 2.41%</strong> と最高値。現状は少量テストのみ。スケールする余地が最も大きい軸組み合わせ。
+          </p>
+          <p class="text-muted mt-16" style="font-size: 12px;"><strong>方針:</strong> 鳥獣戯画クリエイティブのバリエーション拡張 + 20〜30代女性向けシリーズ展開</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Channel role -->
+    <div class="section">
+      <h2 class="section-title">チャネル別役割の提案</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 90px;">チャネル</th>
+              <th>主ファネル段階</th>
+              <th>推奨訴求タイプ</th>
+              <th>主評価指標</th>
+              <th>注意点</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="ch-pill ch-ad">広告</span></td>
+              <td>認知 〜 興味</td>
+              <td><span class="axis-tag axis-appeal-exp">体験・発見</span> <span class="axis-tag axis-appeal-limited">限定・先行</span></td>
+              <td>接触深度 / 想起率 / 第二接触率</td>
+              <td>「買ったか」だけで評価しない</td>
+            </tr>
+            <tr>
+              <td><span class="ch-pill ch-line">LINE</span></td>
+              <td>興味 〜 検討</td>
+              <td><span class="axis-tag axis-appeal-exp">体験・発見</span> <span class="axis-tag axis-appeal-safe">安心・信頼</span></td>
+              <td>友だち追加経路 × 配信反応</td>
+              <td>友だち追加経路ごとに別シナリオ</td>
+            </tr>
+            <tr>
+              <td><span class="ch-pill ch-mail">メール</span></td>
+              <td>検討 〜 決定 〜 継続</td>
+              <td><span class="axis-tag axis-appeal-price">価格・割引</span> <span class="axis-tag axis-appeal-safe">安心・信頼</span></td>
+              <td>セグメント × 訴求軸 × 検討段階のナーチャ効率</td>
+              <td>「一斉配信」依存からの脱却</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-muted mt-16" style="font-size: 12px;">
+        ※ 各チャネルの「役割の合意」が、評価 KPI の納得感を担保する。週次定例で再合意を回す前提。
+      </p>
+    </div>
+
+    <a href="ai_planning.html" class="btn btn-primary mt-16">企画→生成 AI で次のキャンペーンを設計 →</a>
+  </main>
+
+  <footer class="footer">
+    <div>atarayo prototype — 仮データ・実装前のイメージです</div>
+    <div>© atarayo Inc. / 最終更新 2026-05-25</div>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>メール ダッシュボード | JTT 様向け クリエイティブAI 提案モック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/atarayo.css">
+<style>
+.funnel-row { display: flex; align-items: center; gap: 0; margin-bottom: 8px; }
+.funnel-bar-wrap { flex: 1; background: var(--bg-light); border-radius: 4px; height: 34px; position: relative; overflow: hidden; }
+.funnel-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 12px; color: white; font-size: 12px; font-weight: 600; }
+.funnel-label { width: 120px; font-size: 12px; color: var(--text-sub); padding-right: 12px; text-align: right; flex-shrink: 0; }
+.funnel-rate { width: 60px; font-size: 12px; color: var(--text-sub); padding-left: 10px; flex-shrink: 0; }
+.seg-tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.seg-new { background: #DCE9F5; color: #1A4A7A; }
+.seg-repeat { background: #F5E4D6; color: #8E3A0A; }
+.seg-lapsed { background: #F5DEDC; color: var(--error); }
+.seg-prospect { background: #DCEFE4; color: #1E6A4A; }
+.nurture-step { display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: var(--bg-white); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; }
+.nurture-num { width: 28px; height: 28px; border-radius: 50%; background: var(--brand-dark); color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.nurture-num-accent { background: var(--brand-accent); }
+.nurture-num-gray { background: var(--text-sub); }
+/* ── Mini email card thumbnails ── */
+.mini-mail { width: 58px; height: 76px; border-radius: 5px; overflow: hidden; border: 1px solid var(--border); background: white; font-family: 'Noto Sans JP', sans-serif; flex-shrink: 0; }
+.mini-mail-top { padding: 3px 4px; border-bottom: 1px solid #eee; }
+.mini-mail-subject { font-size: 6px; font-weight: 700; color: #222; line-height: 1.3; overflow: hidden; }
+.mini-mail-from { font-size: 5px; color: #999; }
+.mini-mail-banner { height: 36px; overflow: hidden; }
+.mini-mail-banner-inner { width: 100%; height: 100%; }
+.mini-mail-body { padding: 3px 4px; font-size: 5.5px; color: #555; line-height: 1.3; }
+/* banner gradients matching the creative styles */
+.mmb-kyoto  { background: linear-gradient(155deg, #ffd4e8 0%, #ffaac8 40%, #1a3050 100%); }
+.mmb-nagoya { background: linear-gradient(155deg, #fff4e6 0%, #ffd4a0 40%, #1a3050 100%); }
+.mmb-hayaki { background: linear-gradient(155deg, #e8580a 0%, #f5820a 35%, #0d2a4a 100%); }
+.mmb-choju  { background: linear-gradient(155deg, #f5ead8 0%, #e8d4a8 40%, #3a2a10 100%); }
+.mmb-tokai  { background: linear-gradient(155deg, #2a6090 0%, #4a9830 50%, #c84a0a 100%); }
+.mmb-hokuriku { background: linear-gradient(155deg, #2a4a80 0%, #4a7ab0 40%, #1a3050 100%); }
+.mmb-reactivate { background: linear-gradient(155deg, #888 0%, #aaa 50%, #333 100%); }
+.mmb-family { background: linear-gradient(155deg, #ffe4b0 0%, #ffb870 40%, #1a3050 100%); }
+/* axis tags */
+.axis-tag { display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 8px; font-size: 10px; font-weight: 500; white-space: nowrap; }
+.axis-appeal-price { background: #F5E4D6; color: #8E3A0A; }
+.axis-appeal-exp   { background: #DCE9F5; color: #1A4A7A; }
+.axis-appeal-limit { background: #FCEDE0; color: #9A4800; }
+.axis-appeal-trust { background: #DCEFE4; color: #1E5A3A; }
+.axis-appeal-new   { background: #F0F4F8; color: #445566; }
+.axis-seg-purchase { background: #F5E4D6; color: #8E3A0A; }
+.axis-seg-prospect { background: #DCEFE4; color: #1E5A3A; }
+.axis-seg-lapsed   { background: #F5DEDC; color: #B83A2A; }
+.axis-seg-family   { background: #FEF3F2; color: #8B2000; }
+.axis-seg-f20      { background: #FCE7F6; color: #8B0060; }
+.axis-motif-fuji   { background: #EBF1F8; color: #1A4A7A; }
+.axis-motif-train  { background: #EBF1F8; color: #1A4A7A; }
+.axis-motif-castle { background: #FEF7E0; color: #7A5500; }
+.axis-motif-culture{ background: #FEF7E0; color: #7A5500; }
+.axis-motif-nature { background: #EBF1F8; color: #1A4A7A; }
+.axis-design-photo { background: #F0F4F8; color: #445566; }
+.axis-design-text  { background: #F0F4F8; color: #445566; }
+.axis-design-simple{ background: #F0F4F8; color: #445566; }
+.axis-cell { display: flex; flex-direction: column; gap: 3px; }
+.table-scroll { overflow-x: auto; }
+.table-scroll .table { min-width: 860px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a href="index.html" class="logo">atarayo</a>
+    <div class="header-divider"></div>
+    <div class="header-context"><strong>JTT</strong> 様向け クリエイティブAI 提案モック</div>
+    <div class="header-right">メール ダッシュボード — 第1層</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-section">画面一覧</div>
+    <a href="index.html" class="sidebar-item">概要 / 全体像</a>
+    <a href="dashboard_ad.html" class="sidebar-item">広告ダッシュボード</a>
+    <a href="dashboard_line.html" class="sidebar-item">LINE ダッシュボード</a>
+    <a href="dashboard_mail.html" class="sidebar-item is-active">メール ダッシュボード</a>
+    <a href="dashboard_ugc.html" class="sidebar-item">UGC ダッシュボード</a>
+    <a href="portfolio.html" class="sidebar-item">認知ポートフォリオ</a>
+    <a href="ai_planning.html" class="sidebar-item">企画→生成 AI</a>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">メール ダッシュボード <span class="badge badge-orange" style="font-size: 12px; vertical-align: middle;">第1層</span></h1>
+    <p class="page-subtitle">セグメント × 訴求軸 × 検討段階のナーチャ効率を可視化。「過去購入者への再訴求が中心で、未購入層へのナーチャ設計が不在」という構造課題を捉える。</p>
+
+    <div class="filter-bar">
+      <select class="filter-select">
+        <option>期間: 2026-04（直近の主要セール）</option>
+        <option>2026-03</option>
+        <option>過去3ヶ月</option>
+      </select>
+      <select class="filter-select">
+        <option>セグメント: すべて</option>
+        <option>過去購入者</option>
+        <option>休眠（6ヶ月+未購入）</option>
+        <option>見込み（未購入）</option>
+      </select>
+      <select class="filter-select">
+        <option>配信種別: すべて</option>
+        <option>セール告知</option>
+        <option>ナーチャ（検討期）</option>
+        <option>再エンゲージ</option>
+      </select>
+      <button class="btn btn-secondary btn-sm" style="margin-left: auto;">CSV書き出し</button>
+    </div>
+
+    <div class="alert alert-warning">
+      <strong>仮説:</strong> 配信リストの約 <strong>68%が過去購入者</strong>。未購入・検討段階セグメントへの設計が不在のため、認知〜検討層の育成ができていない。
+      <a href="portfolio.html" class="text-accent" style="margin-left: auto; white-space: nowrap;">認知ポートフォリオで詳細 →</a>
+    </div>
+
+    <!-- KPI -->
+    <div class="section">
+      <div class="grid grid-4">
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">配信数（月次）</span>
+            <span class="kpi-value">462<span class="kpi-unit">K</span></span>
+            <span class="kpi-delta kpi-delta-plus">+3.2% 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">開封率（全体）</span>
+            <span class="kpi-value">24.8<span class="kpi-unit">%</span></span>
+            <span class="kpi-delta kpi-delta-minus">-0.8pt 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">CTR（メール→LP）</span>
+            <span class="kpi-value">3.2<span class="kpi-unit">%</span></span>
+            <span class="kpi-delta text-muted">前月 3.4%</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">CV数（予約完了）</span>
+            <span class="kpi-value">1,240</span>
+            <span class="kpi-delta kpi-delta-plus">+2.8% 前月比</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Heatmap + funnel -->
+    <div class="section">
+      <div class="grid grid-asym">
+        <!-- Heatmap: segment × appeal -->
+        <div class="card">
+          <div class="card-header">セグメント × 訴求軸 開封率マトリックス</div>
+          <div class="heatmap" style="grid-template-columns: 140px repeat(4, 1fr); margin-top: 8px;">
+            <!-- header -->
+            <div class="heatmap-corner"></div>
+            <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">価格・割引</div>
+            <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">体験・発見</div>
+            <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">限定・先行</div>
+            <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">安心・保証</div>
+            <!-- Row: 過去購入（6ヶ月以内） -->
+            <div class="heatmap-label">過去購入<br><span style="font-size: 10px;">（6ヶ月以内）</span></div>
+            <div class="heatmap-cell h-very-high">48.6%</div>
+            <div class="heatmap-cell h-high">38.4%</div>
+            <div class="heatmap-cell h-high">42.2%</div>
+            <div class="heatmap-cell h-mid-2">26.8%</div>
+            <!-- Row: 休眠（6〜18ヶ月） -->
+            <div class="heatmap-label">休眠<br><span style="font-size: 10px;">（6〜18ヶ月未購入）</span></div>
+            <div class="heatmap-cell h-mid-2">28.4%</div>
+            <div class="heatmap-cell h-high">34.2%</div>
+            <div class="heatmap-cell h-mid-2">29.6%</div>
+            <div class="heatmap-cell h-mid">18.4%</div>
+            <!-- Row: 見込み（未購入・メール登録） -->
+            <div class="heatmap-label">見込み<br><span style="font-size: 10px;">（未購入・登録済）</span></div>
+            <div class="heatmap-cell h-low">12.4%</div>
+            <div class="heatmap-cell h-mid">18.6%</div>
+            <div class="heatmap-cell h-mid">16.8%</div>
+            <div class="heatmap-cell h-mid">19.2%</div>
+            <!-- Row: 長期休眠（18ヶ月+） -->
+            <div class="heatmap-label" style="color: var(--error);">長期休眠<br><span style="font-size: 10px;">（18ヶ月+）</span></div>
+            <div class="heatmap-cell h-low">8.2%</div>
+            <div class="heatmap-cell h-low">9.6%</div>
+            <div class="heatmap-cell h-low">11.4%</div>
+            <div class="heatmap-cell h-low">7.8%</div>
+          </div>
+          <p class="text-muted" style="font-size: 11px; margin-top: 12px;">
+            ※ 見込みセグメントへの「安心訴求」が想定外に健闘（19.2%）。体験訴求と組み合わせた、信頼構築 → 検討促進のナーチャシーケンス設計が有効な可能性。
+          </p>
+        </div>
+
+        <!-- Funnel -->
+        <div class="card">
+          <div class="card-header">配信 → CV ファネル（全体）</div>
+          <div style="margin-top: 12px;">
+            <div class="funnel-row">
+              <div class="funnel-label">配信</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 100%; background: var(--brand-dark);">462,000通</div>
+              </div>
+              <div class="funnel-rate"></div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">到達（不達除外）</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 96.4%; background: #3A5A7A;">445,368</div>
+              </div>
+              <div class="funnel-rate text-muted">96.4%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">開封</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 24.8%; background: #1A4A7A;">114,612</div>
+              </div>
+              <div class="funnel-rate text-muted">24.8%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">クリック（LP遷移）</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 3.2%; background: var(--brand-accent);">14,784</div>
+              </div>
+              <div class="funnel-rate text-muted">3.2%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">LP 10秒+ 滞在</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 1.8%; background: var(--warning);">8,316</div>
+              </div>
+              <div class="funnel-rate text-muted">1.8%</div>
+            </div>
+            <div class="funnel-row">
+              <div class="funnel-label">予約完了</div>
+              <div class="funnel-bar-wrap">
+                <div class="funnel-bar" style="width: 0.27%; background: var(--success); min-width: 56px;">1,240</div>
+              </div>
+              <div class="funnel-rate text-muted">0.27%</div>
+            </div>
+          </div>
+          <p class="text-muted mt-16" style="font-size: 11px;">
+            ※ 開封 → クリックの離脱（24.8% → 3.2%）が最大の損失。件名 / バナーと LPの訴求不一致が原因と推定。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nurture design: As-Is → To-Be -->
+    <div class="section">
+      <h2 class="section-title">ナーチャ設計 As-Is / To-Be</h2>
+      <div class="compare">
+        <div class="compare-col compare-col-asis">
+          <h4>As-Is（現状）</h4>
+          <ul style="list-style: none; padding: 0; font-size: 13px;">
+            <li style="padding: 6px 0; border-bottom: 1px solid #E5BAB5;">📧 全セグメントに同一配信（月2〜4回）</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid #E5BAB5;">📊 開封有無は確認するが、セグメント別の打ち手なし</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid #E5BAB5;">🔁 過去購入者中心の刈り取り設計。未購入層は放置</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid #E5BAB5;">⚠️ 件名A/Bテストは不定期。勝ちパターンの蓄積なし</li>
+            <li style="padding: 6px 0;">⏱ セール直前のみ配信量が増え、平常時のナーチャがない</li>
+          </ul>
+        </div>
+        <div class="compare-arrow">→</div>
+        <div class="compare-col compare-col-tobe">
+          <h4>To-Be（提案）</h4>
+          <ul style="list-style: none; padding: 0; font-size: 13px;">
+            <li style="padding: 6px 0; border-bottom: 1px solid #B9DECC;">✅ セグメント別ナーチャシーケンス（見込み/休眠/購入済）</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid #B9DECC;">✅ 開封 / クリック行動に応じた次配信の自動分岐</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid #B9DECC;">✅ 未購入層: 体験訴求 → 安心訴求 → 限定オファーの3ステップ</li>
+            <li style="padding: 6px 0; border-bottom: 1px solid #B9DECC;">✅ 件名 × バナー A/Bテストを全配信に自動適用・勝ちパターン蓄積</li>
+            <li style="padding: 6px 0;">✅ セール前2週間の「温め期」配信（体験コンテンツ先行）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposed nurture sequence for prospects -->
+    <div class="section">
+      <h2 class="section-title">見込みセグメント向け ナーチャシーケンス案（AI生成）</h2>
+      <div class="alert alert-info">
+        <strong>対象:</strong> 未購入・メール登録済みセグメント（推定 82,000名）。現状はセール告知の一括配信のみ。
+      </div>
+      <div style="background: var(--bg-light); padding: 20px; border-radius: 6px;">
+        <div class="nurture-step">
+          <div class="nurture-num nurture-num-accent">1</div>
+          <div>
+            <div class="fw-600" style="margin-bottom: 4px;">登録翌日: ウェルカム + 旅の提案（体験訴求）</div>
+            <div class="text-muted" style="font-size: 12px;">件名例:「JTTへようこそ！あなたに合う旅先、3つ選んでみました」/ 訴求: 体験・発見 / 期待開封率: 38〜42%</div>
+          </div>
+        </div>
+        <div class="nurture-step">
+          <div class="nurture-num nurture-num-accent">2</div>
+          <div>
+            <div class="fw-600" style="margin-bottom: 4px;">D+4: 実績 / 口コミ紹介（安心・信頼訴求）</div>
+            <div class="text-muted" style="font-size: 12px;">件名例:「旅行者満足度98%の理由を、実際の声でご紹介」/ 訴求: 安心・保証 / 期待CTR: 4〜6%</div>
+          </div>
+        </div>
+        <div class="nurture-step">
+          <div class="nurture-num nurture-num-accent">3</div>
+          <div>
+            <div class="fw-600" style="margin-bottom: 4px;">D+10: 閲覧 / クリック行動に応じた訴求分岐</div>
+            <div class="text-muted" style="font-size: 12px;">前回クリックありの場合: 該当エリアの詳細プラン / クリックなしの場合: 別訴求で再試行（体験→価格）</div>
+          </div>
+        </div>
+        <div class="nurture-step">
+          <div class="nurture-num nurture-num-gray">4</div>
+          <div>
+            <div class="fw-600" style="margin-bottom: 4px;">D+18: セール前予告（限定・先行訴求）</div>
+            <div class="text-muted" style="font-size: 12px;">件名例:「来週セール前に先行確認できます」/ 期待CVR: 0.8〜1.2%（一括配信比 +3倍）</div>
+          </div>
+        </div>
+        <div class="nurture-step">
+          <div class="nurture-num nurture-num-gray">5</div>
+          <div>
+            <div class="fw-600" style="margin-bottom: 4px;">D+21: セール当日（価格・緊迫感訴求）</div>
+            <div class="text-muted" style="font-size: 12px;">ここまで温めた層は価格オファーに反応しやすい状態。開封率 28〜35%、CVR 1.5〜2.0% を想定。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Creative table -->
+    <div class="section">
+      <h2 class="section-title">件名 / クリエイティブ評価（上位8件）</h2>
+      <div class="table-wrap table-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 66px;">サムネ</th>
+              <th style="min-width: 200px;">件名</th>
+              <th>訴求タイプ</th>
+              <th>セグメント</th>
+              <th>モチーフ</th>
+              <th>デザイン</th>
+              <th class="text-right">配信数</th>
+              <th class="text-right">開封率</th>
+              <th class="text-right">CTR</th>
+              <th class="text-right">CV数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="mini-mail">
+                  <div class="mini-mail-top">
+                    <div class="mini-mail-from">JR東海ツアーズ</div>
+                    <div class="mini-mail-subject">4月セール最終日。京都プラン残り12席</div>
+                  </div>
+                  <div class="mini-mail-banner"><div class="mini-mail-banner-inner mmb-kyoto"></div></div>
+                  <div class="mini-mail-body">早めの予約で、旅をおトクに</div>
+                </div>
+              </td>
+              <td class="fw-600">「4月セール最終日。京都プラン残り12席」<span class="text-muted" style="font-size: 10px; display: block;">04_mail_kyoto_final_v1</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-limit">限定・先行</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-purchase">過去購入</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-nature">富士山・自然</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">62,400</td>
+              <td class="text-right fw-600">51.2%</td>
+              <td class="text-right">6.8%</td>
+              <td class="text-right text-success">482</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-mail">
+                  <div class="mini-mail-top">
+                    <div class="mini-mail-from">JR東海ツアーズ</div>
+                    <div class="mini-mail-subject">GW旅行、早く決めた人が得をする理由</div>
+                  </div>
+                  <div class="mini-mail-banner"><div class="mini-mail-banner-inner mmb-hayaki"></div></div>
+                  <div class="mini-mail-body">早期予約で人気日程も安心</div>
+                </div>
+              </td>
+              <td class="fw-600">「GW旅行、早く決めた人が得をする理由」<span class="text-muted" style="font-size: 10px; display: block;">04_mail_gw_early_v3</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-limit">限定・先行</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-purchase">過去購入</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-train">新幹線・乗り物</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-text">テキスト大きめ</span></div></td>
+              <td class="text-right">48,800</td>
+              <td class="text-right">42.8%</td>
+              <td class="text-right">5.4%</td>
+              <td class="text-right">312</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-mail">
+                  <div class="mini-mail-top">
+                    <div class="mini-mail-from">JR東海ツアーズ</div>
+                    <div class="mini-mail-subject">【会員限定】北陸新幹線プラン先行公開</div>
+                  </div>
+                  <div class="mini-mail-banner"><div class="mini-mail-banner-inner mmb-hokuriku"></div></div>
+                  <div class="mini-mail-body">新幹線利用プランを先行ご案内</div>
+                </div>
+              </td>
+              <td class="fw-600">「【会員限定】北陸新幹線プラン先行公開」<span class="text-muted" style="font-size: 10px; display: block;">04_mail_hokuriku_v1</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-new">新規性・旬</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-purchase">過去購入</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-train">新幹線・乗り物</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">52,000</td>
+              <td class="text-right">38.6%</td>
+              <td class="text-right">4.8%</td>
+              <td class="text-right">218</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-mail">
+                  <div class="mini-mail-top">
+                    <div class="mini-mail-from">JR東海ツアーズ</div>
+                    <div class="mini-mail-subject">春の京都、まだ知らない路地がある</div>
+                  </div>
+                  <div class="mini-mail-banner"><div class="mini-mail-banner-inner mmb-kyoto"></div></div>
+                  <div class="mini-mail-body">名画の世界をめぐる和の旅</div>
+                </div>
+              </td>
+              <td class="fw-600">「春の京都、まだ知らない路地がある」<span class="text-muted" style="font-size: 10px; display: block;">04_mail_kyoto_disc_v2</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-exp">体験・発見</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-prospect">見込み</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-culture">伝統文化・アート</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">38,200</td>
+              <td class="text-right fw-600">26.4%</td>
+              <td class="text-right">4.2%</td>
+              <td class="text-right">168</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-mail">
+                  <div class="mini-mail-top">
+                    <div class="mini-mail-from">JR東海ツアーズ</div>
+                    <div class="mini-mail-subject">あなたが最後に旅したのはどこ？</div>
+                  </div>
+                  <div class="mini-mail-banner"><div class="mini-mail-banner-inner mmb-reactivate"></div></div>
+                  <div class="mini-mail-body">また旅に出ませんか</div>
+                </div>
+              </td>
+              <td class="fw-600">「あなたが最後に旅したのはどこ？」<span class="text-muted" style="font-size: 10px; display: block;">04_mail_reactivate_exp_v1</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-exp">体験・発見</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-lapsed">休眠</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-nature">富士山・自然</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-simple">シンプルバナー</span></div></td>
+              <td class="text-right">28,800</td>
+              <td class="text-right">22.4%</td>
+              <td class="text-right">3.2%</td>
+              <td class="text-right">62</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-mail">
+                  <div class="mini-mail-top">
+                    <div class="mini-mail-from">JR東海ツアーズ</div>
+                    <div class="mini-mail-subject">旅行者1,200人に聞いた、名古屋の正解</div>
+                  </div>
+                  <div class="mini-mail-banner"><div class="mini-mail-banner-inner mmb-nagoya"></div></div>
+                  <div class="mini-mail-body">みんなで楽しむ名古屋ステイ</div>
+                </div>
+              </td>
+              <td class="fw-600">「旅行者1,200人に聞いた、名古屋の正解」<span class="text-muted" style="font-size: 10px; display: block;">04_mail_nagoya_review_v1</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-trust">安心・信頼</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-prospect">見込み</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-castle">城・観光地</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">41,600</td>
+              <td class="text-right">22.8%</td>
+              <td class="text-right">3.8%</td>
+              <td class="text-right">112</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-mail">
+                  <div class="mini-mail-top">
+                    <div class="mini-mail-from">JR東海ツアーズ</div>
+                    <div class="mini-mail-subject">ご無沙汰しています。お得な旅を</div>
+                  </div>
+                  <div class="mini-mail-banner"><div class="mini-mail-banner-inner mmb-tokai"></div></div>
+                  <div class="mini-mail-body">今だけ、おトクに東海旅へ</div>
+                </div>
+              </td>
+              <td class="fw-600">「ご無沙汰しています。お得な旅、いかがですか」<span class="text-muted" style="font-size: 10px; display: block;">04_mail_reactivate_v2</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-price">価格・割引</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-lapsed">休眠</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-castle">城・観光地</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-simple">シンプルバナー</span></div></td>
+              <td class="text-right">34,200</td>
+              <td class="text-right">14.6%</td>
+              <td class="text-right">2.1%</td>
+              <td class="text-right">48</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-mail">
+                  <div class="mini-mail-top">
+                    <div class="mini-mail-from">JR東海ツアーズ</div>
+                    <div class="mini-mail-subject">家族でGW、コスパで選ぶ旅行先3選</div>
+                  </div>
+                  <div class="mini-mail-banner"><div class="mini-mail-banner-inner mmb-family"></div></div>
+                  <div class="mini-mail-body">みんなで楽しめるプランをご紹介</div>
+                </div>
+              </td>
+              <td class="fw-600">「家族でGW、コスパで選ぶ旅行先3選」<span class="text-muted" style="font-size: 10px; display: block;">04_mail_family_gw_v2</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-price">価格・割引</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-prospect">見込み</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-castle">城・観光地</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">44,400</td>
+              <td class="text-right text-error">11.8%</td>
+              <td class="text-right text-error">1.6%</td>
+              <td class="text-right text-error">38</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Insight summary -->
+    <div class="section">
+      <h2 class="section-title">改善インサイト（AI生成・要確認）</h2>
+      <div class="grid grid-3">
+        <div class="card" style="border-left: 3px solid var(--error);">
+          <div class="card-header" style="font-size: 14px; color: var(--error);">❶ 見込みへの価格訴求は逆効果</div>
+          <p style="font-size: 13px; color: var(--text-sub); line-height: 1.7;">未購入・見込みセグメントへの価格訴求メールは開封率 11.8%。同セグメントへの体験訴求 26.4% と比較して -14.6pt。信頼構築なき価格提示は離脱を招く。</p>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--warning);">
+          <div class="card-header" style="font-size: 14px; color: var(--warning);">❷ 休眠は体験で動く</div>
+          <p style="font-size: 13px; color: var(--text-sub); line-height: 1.7;">休眠層へは価格型より体験訴求件名が +7.8pt 高い開封率。「いつか旅したい」記憶を呼び覚ます体験コンテンツ先行 → その後に価格オファーの2ステップが有効。</p>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--brand-accent);">
+          <div class="card-header" style="font-size: 14px; color: var(--brand-accent);">❸ ナーチャ期間中の CV 積み上げが未設計</div>
+          <p style="font-size: 13px; color: var(--text-sub); line-height: 1.7;">セール日前後に配信が集中しており、平常時の「温め配信」がない。見込みセグメント向けに21日シーケンスを設計することで、セール当日のCV率を推定3倍に改善できる見込み。</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>atarayo prototype — 仮データ・実装前のイメージです</div>
+    <div>© atarayo Inc. / 最終更新 2026-05-24</div>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</body>
+</html>

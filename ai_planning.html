@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>企画→生成 AI | JTT 様向け クリエイティブAI 提案モック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/atarayo.css">
+<style>
+.chat-window { background: var(--bg-white); border: 1px solid var(--border); border-radius: 6px; padding: 20px; max-height: 600px; overflow-y: auto; }
+.chat-msg { display: flex; gap: 12px; margin-bottom: 20px; }
+.chat-msg .chat-avatar { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--brand-dark); color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+.chat-msg .chat-avatar.is-ai { background: var(--brand-accent); }
+.chat-msg .chat-body { flex: 1; }
+.chat-msg .chat-meta { font-size: 12px; color: var(--text-sub); margin-bottom: 4px; }
+.chat-msg .chat-meta strong { color: var(--text-on-light); font-weight: 600; }
+.chat-msg .chat-content { font-size: 14px; line-height: 1.7; }
+.chat-msg .chat-content ol, .chat-msg .chat-content ul { padding-left: 20px; margin: 6px 0; }
+.chat-sources { margin-top: 10px; padding: 10px 12px; background: var(--bg-light); border-left: 3px solid var(--brand-accent); font-size: 12px; color: var(--text-sub); border-radius: 0 4px 4px 0; }
+.chat-input { display: flex; gap: 8px; margin-top: 16px; }
+.chat-input input { flex: 1; padding: 10px 14px; border: 1px solid var(--border); border-radius: 4px; font-size: 14px; }
+.creative-card { background: var(--bg-light); border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+.creative-thumb { width: 100%; height: 120px; border-radius: 4px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 500; text-align: center; padding: 12px; }
+/* axis tags */
+.axis-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 10px; white-space: nowrap; }
+.axis-appeal-price   { background: #FFF3E0; color: #E65100; }
+.axis-appeal-exp     { background: #E8F5E9; color: #1B5E20; }
+.axis-appeal-limited { background: #EDE7F6; color: #4527A0; }
+.axis-appeal-safe    { background: #E3F2FD; color: #0D47A1; }
+.axis-seg-f2030      { background: #FCE4EC; color: #880E4F; }
+.axis-motif-kyoto    { background: #FBE9E7; color: #BF360C; }
+.axis-design-illust  { background: #E0F7FA; color: #006064; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a href="index.html" class="logo">atarayo</a>
+    <div class="header-divider"></div>
+    <div class="header-context"><strong>JTT</strong> 様向け クリエイティブAI 提案モック</div>
+    <div class="header-right">企画→生成 AI — 第3層</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-section">画面一覧</div>
+    <a href="index.html" class="sidebar-item">概要 / 全体像</a>
+    <a href="dashboard_ad.html" class="sidebar-item">広告ダッシュボード</a>
+    <a href="dashboard_line.html" class="sidebar-item">LINE ダッシュボード</a>
+    <a href="dashboard_mail.html" class="sidebar-item">メール ダッシュボード</a>
+    <a href="dashboard_ugc.html" class="sidebar-item">UGC ダッシュボード</a>
+    <a href="portfolio.html" class="sidebar-item">認知ポートフォリオ</a>
+    <a href="ai_planning.html" class="sidebar-item is-active">企画→生成 AI</a>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">企画→生成 AI <span class="badge badge-orange" style="font-size: 12px; vertical-align: middle;">第3層</span></h1>
+    <p class="page-subtitle">第2層で見えた「偏り」をもとに、次キャンペーンの設計をAIと対話しながら詰める。「狙う認知」起点に逆算でクリエイティブまで設計。</p>
+
+    <div class="alert alert-info">
+      <strong>このセッション:</strong> 認知ポートフォリオで検出された「<span class="axis-tag axis-appeal-exp">体験・発見</span> 訴求 × 検討段階の失速」を起点にした、6月キャンペーン設計の対話例。
+    </div>
+
+    <div class="chat-window">
+      <div class="chat-msg">
+        <div class="chat-avatar">担</div>
+        <div class="chat-body">
+          <div class="chat-meta"><strong>担当者</strong> — 09:15</div>
+          <div class="chat-content">
+            6月の京都キャンペーンで、体験・発見訴求×検討段階を厚くしたい。20〜30代女性向け、予算月¥3M。提案ある？
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-msg">
+        <div class="chat-avatar is-ai">A</div>
+        <div class="chat-body">
+          <div class="chat-meta"><strong>atarayo AI</strong> — 09:15</div>
+          <div class="chat-content">
+            「<span class="axis-tag axis-appeal-exp">体験・発見</span> × 検討段階」のキャンペーン設計を3案ご提示します。いずれも「比較バンドル」型で、検討段階の失速対策を組み込んでいます。
+            <ol>
+              <li><strong>案A: 京都「テーマ別1日3コース」比較</strong>
+                <ul>
+                  <li>テーマ: 庭園 / 食 / 寺社、各3コース計9パターン</li>
+                  <li>狙う認知: 「京都＝多面的に楽しめる」</li>
+                  <li>主訴求: 体験の選択肢提示・比較できる安心感</li>
+                </ul>
+              </li>
+              <li><strong>案B: 「私の京都」体験者ストーリーシリーズ</strong>
+                <ul>
+                  <li>20-30代女性の実体験ストーリー5本</li>
+                  <li>狙う認知: 「自分にも合いそう」共感</li>
+                  <li>主訴求: 等身大の体験・無理のない費用感</li>
+                </ul>
+              </li>
+              <li><strong>案C: 「迷ったらこれ」エキスパート選定3パターン</strong>
+                <ul>
+                  <li>料金帯ごとに専門家が選んだコース提示</li>
+                  <li>狙う認知: 「失敗しない選択肢」</li>
+                  <li>主訴求: 検討負荷の軽減・専門家の権威</li>
+                </ul>
+              </li>
+            </ol>
+            予算配分の試算と、KPI設計の初期案も合わせて作りますか？
+          </div>
+          <div class="chat-sources">
+            <strong>根拠:</strong>
+            <ul style="list-style: none; padding: 0;">
+              <li>・ 認知ポートフォリオ（2026-04）: <span class="axis-tag axis-appeal-exp">体験・発見</span> × 検討段階 = 4%（理想15%）</li>
+              <li>・ モチーフ×デザインパターン: <span class="axis-tag axis-motif-kyoto">京都・寺社仏閣</span> × <span class="axis-tag axis-design-illust">イラスト</span> CTR 2.41%（最高値）→ 拡張余地大</li>
+              <li>・ 既存勝ち訴求（<span class="axis-tag axis-appeal-price">価格・割引</span> × 決定 28%）を温存する方針</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-msg">
+        <div class="chat-avatar">担</div>
+        <div class="chat-body">
+          <div class="chat-meta"><strong>担当者</strong> — 09:18</div>
+          <div class="chat-content">
+            案Aの方向で、クリエイティブのバナー3案サムネ作って。
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-msg">
+        <div class="chat-avatar is-ai">A</div>
+        <div class="chat-body">
+          <div class="chat-meta"><strong>atarayo AI</strong> — 09:18</div>
+          <div class="chat-content">
+            案A「京都テーマ別1日3コース」のバナー3案を生成しました。いずれも <span class="axis-tag axis-appeal-exp">体験・発見</span> × 検討の比較バンドル型です。
+          </div>
+          <div class="grid grid-3" style="margin-top: 12px;">
+            <div class="creative-card">
+              <div class="creative-thumb" style="background: linear-gradient(135deg, #1E8A5F 0%, #0B1F33 100%);">庭園 ✕ 朝・昼・夕<br>3コース比較</div>
+              <div style="font-size: 12px; font-weight: 600;">案A-1: 庭園テーマ</div>
+              <div class="text-muted" style="font-size: 11px; margin-top: 4px;">主訴求: 時間帯で変わる京都</div>
+            </div>
+            <div class="creative-card">
+              <div class="creative-thumb" style="background: linear-gradient(135deg, #C25A1A 0%, #C58A1A 100%);">京都の食<br>朝食 / 昼食 / 夕食<br>厳選3コース</div>
+              <div style="font-size: 12px; font-weight: 600;">案A-2: 食テーマ</div>
+              <div class="text-muted" style="font-size: 11px; margin-top: 4px;">主訴求: 食通の京都を3パターン</div>
+            </div>
+            <div class="creative-card">
+              <div class="creative-thumb" style="background: linear-gradient(135deg, #0B1F33 0%, #1A4A7A 100%);">寺社めぐり<br>東山 / 嵐山 / 洛南<br>3エリア比較</div>
+              <div style="font-size: 12px; font-weight: 600;">案A-3: 寺社テーマ</div>
+              <div class="text-muted" style="font-size: 11px; margin-top: 4px;">主訴求: エリアで選ぶ京都</div>
+            </div>
+          </div>
+          <div class="chat-sources">
+            <strong>設計意図（訴求4軸）:</strong>
+            <ul style="list-style: none; padding: 0;">
+              <li>・ 訴求タイプ: <span class="axis-tag axis-appeal-exp">体験・発見</span> — 「比較できる3つの選択肢」提示で検討段階の失速を対策</li>
+              <li>・ セグメント: <span class="axis-tag axis-seg-f2030">20〜30代女性</span> — 価格・割引訴求を除外し体験・発見の純度を保つ</li>
+              <li>・ モチーフ: <span class="axis-tag axis-motif-kyoto">京都・寺社仏閣</span> — イラスト調デザインで CTR ポテンシャルを最大化</li>
+              <li>・ クリックで「3コース詳細比較ページ」へ遷移、検討に必要な情報を集約</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-msg">
+        <div class="chat-avatar">担</div>
+        <div class="chat-body">
+          <div class="chat-meta"><strong>担当者</strong> — 09:22</div>
+          <div class="chat-content">
+            京都以外でも、いま仕込んでおくべきテーマある？UGCの動きも踏まえて。
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-msg">
+        <div class="chat-avatar is-ai">A</div>
+        <div class="chat-body">
+          <div class="chat-meta"><strong>atarayo AI</strong> — 09:22</div>
+          <div class="chat-content">
+            UGC分析から1テーマ提案します。先月のUGCでは<strong>「推し活遠征」テーマが前月比+40%</strong>（176件 / ポジ率81%）と急伸していますが、広告では未配信の組み合わせです。
+            <ul>
+              <li>軸設計: <span class="axis-tag axis-appeal-limited">限定・先行</span> × <span class="axis-tag axis-seg-f2030">20〜30代女性</span> × 新幹線+ホテルセット訴求</li>
+              <li>コピー方向: UGCで頻出する「遠征費を抑える」「ホテル付きでこの値段」の生活者語彙をそのまま活かす</li>
+              <li>初期配分: 月予算の10%でテスト配信 → CTR/CVRが立てば本投下</li>
+            </ul>
+            UGC発のテーマは「生活者がすでに語っている言葉」で作れるため、コピーの外しが起きにくいのが利点です。
+          </div>
+          <div class="chat-sources">
+            <strong>根拠:</strong>
+            <ul style="list-style: none; padding: 0;">
+              <li>・ UGCダッシュボード（2026-05）: 「推し活遠征」176件 / 前月比+40% / ポジ率81%</li>
+              <li>・ 広告4軸組み合わせ分析: 当該組み合わせは未配信（データなし＝先行者の穴）</li>
+              <li>・ 施策起点投稿の比率 36% — #推し旅 投稿企画がUGC増に寄与</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" placeholder="続けて指示を入力（例: 案A-1のコピー文を3パターン / セグメント別配信プランを提案 / デザインパターンを変えたバリエーションを出して、等）">
+      <button class="btn btn-primary">送信</button>
+    </div>
+
+    <p class="text-muted mt-16" style="font-size: 12px;">
+      ※ 生成されたバナー案は、JTT側のクリエイティブガイドラインに沿った最終調整を経て本番配信される前提。
+      バナーの自動生成・画像合成は Phase 3 の本格機能。デモではAIによる「設計案」までを示す。
+    </p>
+  </main>
+
+  <footer class="footer">
+    <div>atarayo prototype — 仮データ・実装前のイメージです</div>
+    <div>© atarayo Inc. / 最終更新 2026-05-21</div>
+  </footer>
+</div>
+</body>
+</html>

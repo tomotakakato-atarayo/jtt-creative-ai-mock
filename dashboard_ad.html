@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>広告ダッシュボード | JTT 様向け クリエイティブAI 提案モック</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/atarayo.css">
+<style>
+/* ── Creative thumbnail mini-ads ── */
+.mini-ad { width: 60px; height: 76px; border-radius: 5px; overflow: hidden; position: relative; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.12); font-family: 'Noto Sans JP', sans-serif; }
+.mini-ad-bg { position: absolute; inset: 0; }
+.mini-ad-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 4px 5px 4px; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%); }
+.mini-ad-content-light { background: linear-gradient(to top, rgba(255,255,255,0.8) 0%, transparent 100%); }
+.mini-ad-title { font-size: 7.5px; font-weight: 900; line-height: 1.2; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+.mini-ad-title-dark { color: #8b3210; text-shadow: none; }
+.mini-ad-title-brown { color: #5a3a10; text-shadow: none; }
+.mini-ad-brand { font-size: 5px; color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.3); padding: 1px 3px; border-radius: 2px; margin-top: 2px; display: inline-block; }
+.mini-ad-brand-dark { color: #c25a1a; background: rgba(194,90,26,0.12); }
+.mini-ad-accent-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; }
+
+/* === 1. 早期予約特割 === */
+.mad-hayaki .mini-ad-bg { background: linear-gradient(155deg, #e8580a 0%, #f5820a 35%, #c84a00 55%, #0d2a4a 100%); }
+/* leaf accents */
+.mad-hayaki::before { content: '🍁'; position: absolute; top: 3px; right: 3px; font-size: 11px; opacity: 0.9; }
+.mad-hayaki::after { content: '🚄'; position: absolute; top: 38px; left: 2px; font-size: 9px; opacity: 0.85; }
+.mad-hayaki .mini-ad-accent-bar { background: linear-gradient(90deg, #f5a030, #e8580a); }
+
+/* === 2. 家族で名古屋3泊 === */
+.mad-nagoya .mini-ad-bg { background: linear-gradient(155deg, #fff4e6 0%, #ffd4a0 40%, #1a3050 100%); }
+.mad-nagoya::before { content: '🏯'; position: absolute; top: 4px; right: 4px; font-size: 12px; opacity: 0.8; }
+.mad-nagoya::after { content: '🚄'; position: absolute; top: 42px; left: 2px; font-size: 8px; opacity: 0.7; }
+.mad-nagoya .mini-ad-accent-bar { background: linear-gradient(90deg, #f5a030, #e8580a); }
+
+/* === 3. 鳥獣戯画の旅 === */
+.mad-choju .mini-ad-bg { background: linear-gradient(155deg, #f5ead8 0%, #e8d4a8 45%, #3a2a10 100%); }
+.mad-choju::before { content: '🐰'; position: absolute; top: 4px; right: 4px; font-size: 11px; opacity: 0.75; }
+.mad-choju::after { content: '⛩'; position: absolute; top: 40px; left: 2px; font-size: 9px; opacity: 0.65; }
+.mad-choju .mini-ad-accent-bar { background: linear-gradient(90deg, #c8a060, #a07820); }
+
+/* === 4. 東海エリア限定割引 === */
+.mad-tokai .mini-ad-bg {
+  background:
+    linear-gradient(to bottom right, #2a6090 0% 50%, transparent 50%) top left / 50% 50%,
+    linear-gradient(to bottom left, #4a9830 0% 50%, transparent 50%) top right / 50% 50%,
+    linear-gradient(to top right, #c84a0a 0% 50%, transparent 50%) bottom left / 50% 50%,
+    linear-gradient(to top left, #7a4a20 0% 50%, transparent 50%) bottom right / 50% 50%;
+  background-repeat: no-repeat;
+}
+.mad-tokai::before { content: '🗾'; position: absolute; top: 3px; left: 3px; font-size: 9px; opacity: 0.8; }
+.mad-tokai .mini-ad-accent-bar { background: linear-gradient(90deg, #f5a030, #e8580a); }
+
+/* === 5. 京都 桜の3日間 === */
+.mad-kyoto .mini-ad-bg { background: linear-gradient(155deg, #ffd4e8 0%, #ffaac8 40%, #1a3050 100%); }
+.mad-kyoto::before { content: '🌸'; position: absolute; top: 3px; right: 3px; font-size: 12px; opacity: 0.9; }
+.mad-kyoto::after { content: '🚄'; position: absolute; top: 42px; left: 2px; font-size: 8px; opacity: 0.75; }
+.mad-kyoto .mini-ad-accent-bar { background: linear-gradient(90deg, #ff9ec4, #e8580a); }
+
+/* 4-axis tag row */
+.axis-tag { display: inline-flex; align-items: center; padding: 2px 6px; border-radius: 8px; font-size: 10px; font-weight: 500; white-space: nowrap; }
+.axis-appeal-price { background: #F5E4D6; color: #8E3A0A; }
+.axis-appeal-exp   { background: #DCE9F5; color: #1A4A7A; }
+.axis-appeal-limit { background: #FCEDE0; color: #9A4800; }
+.axis-appeal-trust { background: #DCEFE4; color: #1E5A3A; }
+.axis-appeal-new   { background: #F0F4F8; color: #445566; }
+.axis-seg-family   { background: #FEF3F2; color: #8B2000; }
+.axis-seg-f20      { background: #FCE7F6; color: #8B0060; }
+.axis-seg-couple   { background: #FEF3F2; color: #8B2000; }
+.axis-seg-senior   { background: #EFF4F0; color: #2A5A3A; }
+.axis-seg-rail     { background: #EBF1F8; color: #1A4A7A; }
+.axis-motif-fuji   { background: #EBF1F8; color: #1A4A7A; }
+.axis-motif-train  { background: #EBF1F8; color: #1A4A7A; }
+.axis-motif-castle { background: #FEF7E0; color: #7A5500; }
+.axis-motif-food   { background: #FEF7E0; color: #7A5500; }
+.axis-motif-culture{ background: #FEF7E0; color: #7A5500; }
+.axis-design-photo { background: #F0F4F8; color: #445566; }
+.axis-design-text  { background: #F0F4F8; color: #445566; }
+.axis-design-collage{ background: #F0F4F8; color: #445566; }
+.axis-design-wafuu { background: #F0F4F8; color: #445566; }
+.axis-design-simple{ background: #F0F4F8; color: #445566; }
+
+.axis-cell { display: flex; flex-direction: column; gap: 3px; }
+
+/* Table scroll */
+.table-scroll { overflow-x: auto; }
+.table-scroll .table { min-width: 900px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <a href="index.html" class="logo">atarayo</a>
+    <div class="header-divider"></div>
+    <div class="header-context"><strong>JTT</strong> 様向け クリエイティブAI 提案モック</div>
+    <div class="header-right">広告ダッシュボード — 第1層</div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="sidebar-section">画面一覧</div>
+    <a href="index.html" class="sidebar-item">概要 / 全体像</a>
+    <a href="dashboard_ad.html" class="sidebar-item is-active">広告ダッシュボード</a>
+    <a href="dashboard_line.html" class="sidebar-item">LINE ダッシュボード</a>
+    <a href="dashboard_mail.html" class="sidebar-item">メール ダッシュボード</a>
+    <a href="dashboard_ugc.html" class="sidebar-item">UGC ダッシュボード</a>
+    <a href="portfolio.html" class="sidebar-item">認知ポートフォリオ</a>
+    <a href="ai_planning.html" class="sidebar-item">企画→生成 AI</a>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">広告ダッシュボード <span class="badge badge-orange" style="font-size: 12px; vertical-align: middle;">第1層</span></h1>
+    <p class="page-subtitle">訴求タイプ・セグメント・モチーフ・デザインパターンの4軸でクリエイティブを構造化し、「どの組み合わせが数値を出しているか」を可視化する。</p>
+
+    <div class="filter-bar">
+      <select class="filter-select">
+        <option>期間: 2026-04（直近の主要セール）</option>
+        <option>2026-03</option>
+        <option>過去3ヶ月</option>
+      </select>
+      <select class="filter-select">
+        <option>メディア: すべて</option>
+        <option>Meta</option>
+        <option>Google</option>
+        <option>YouTube</option>
+        <option>X</option>
+      </select>
+      <select class="filter-select">
+        <option>訴求タイプ: すべて</option>
+        <option>価格・割引</option>
+        <option>体験・発見</option>
+        <option>限定・先行</option>
+        <option>安心・信頼</option>
+        <option>新規性・旬</option>
+      </select>
+      <select class="filter-select">
+        <option>セグメント: すべて</option>
+        <option>ファミリー</option>
+        <option>20-30代女性</option>
+        <option>カップル</option>
+        <option>シニア</option>
+      </select>
+      <button class="btn btn-secondary btn-sm" style="margin-left: auto;">CSV書き出し</button>
+    </div>
+
+    <div class="alert alert-warning">
+      <strong>仮説:</strong> 価格訴求 × 富士山/新幹線モチーフ × テキスト大きめが全Impの62%を占有。体験訴求 × 伝統文化モチーフのような未配信パターンの数値が未知。
+      <a href="portfolio.html" class="text-accent" style="margin-left: auto; white-space: nowrap;">認知ポートフォリオで詳細 →</a>
+    </div>
+
+    <!-- KPI Row 1: Volume + CTR -->
+    <div class="section">
+      <div class="grid grid-4">
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">消化予算</span>
+            <span class="kpi-value">¥4.82<span class="kpi-unit">M</span></span>
+            <span class="kpi-delta kpi-delta-plus">+8.2% 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">インプレッション</span>
+            <span class="kpi-value">8.42<span class="kpi-unit">M</span></span>
+            <span class="kpi-delta kpi-delta-plus">+6.8% 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">クリック数</span>
+            <span class="kpi-value">104,408</span>
+            <span class="kpi-delta kpi-delta-plus">+11.4% 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">CTR（平均）</span>
+            <span class="kpi-value">1.24<span class="kpi-unit">%</span></span>
+            <span class="kpi-delta kpi-delta-plus">+0.18pt 前月比</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI Row 2: Conversion -->
+    <div class="section" style="margin-top: -16px;">
+      <div class="grid grid-4">
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">CV数（予約完了）</span>
+            <span class="kpi-value">2,184</span>
+            <span class="kpi-delta kpi-delta-plus">+9.6% 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">CVR（クリック→予約）</span>
+            <span class="kpi-value">2.09<span class="kpi-unit">%</span></span>
+            <span class="kpi-delta kpi-delta-plus">+0.12pt 前月比</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">CPA（予約1件あたり）</span>
+            <span class="kpi-value">¥2,206</span>
+            <span class="kpi-delta kpi-delta-plus">▼ 7.8% 改善</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi">
+            <span class="kpi-label">ROAS</span>
+            <span class="kpi-value">8.4<span class="kpi-unit">x</span></span>
+            <span class="kpi-delta kpi-delta-plus">+0.6x 前月比</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trend + composition -->
+    <div class="section">
+      <div class="grid grid-asym">
+        <div class="card">
+          <div class="card-header">
+            訴求タイプ別 CV数推移（直近6週）
+            <div class="flex gap-8" style="font-size: 11px;">
+              <span class="badge badge-orange">価格</span>
+              <span class="badge badge-blue">体験</span>
+              <span class="badge badge-gray">限定・安心・新規性</span>
+            </div>
+          </div>
+          <canvas id="appeal-trend" height="100"></canvas>
+          <p class="text-muted" style="font-size: 11px; margin-top: 8px;">※ 価格訴求が支配的。体験訴求は試行量が少なくデータ蓄積が不十分。</p>
+        </div>
+        <div class="card">
+          <div class="card-header">インプレッション構成（訴求タイプ）</div>
+          <canvas id="appeal-pie" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4-axis combo heatmap: Appeal × Motif -->
+    <div class="section">
+      <h2 class="section-title">
+        4軸 組み合わせ分析 — 訴求タイプ × モチーフ（CTR）
+        <span class="text-muted" style="font-size: 12px; font-weight: 400;">どのパターンが数値を出しているか・未配信（灰色）はどこか</span>
+      </h2>
+      <div class="card">
+        <div class="heatmap" style="grid-template-columns: 120px repeat(5, 1fr);">
+          <div class="heatmap-corner"></div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">富士山・自然</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">新幹線・乗り物</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">城・観光地</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">食・グルメ</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">伝統文化・アート</div>
+          <!-- 価格 -->
+          <div class="heatmap-label" style="font-weight:600;">価格・割引</div>
+          <div class="heatmap-cell h-very-high">2.14%</div>
+          <div class="heatmap-cell h-high">1.82%</div>
+          <div class="heatmap-cell h-mid-2">1.42%</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <!-- 体験 -->
+          <div class="heatmap-label" style="font-weight:600;">体験・発見</div>
+          <div class="heatmap-cell h-mid">1.18%</div>
+          <div class="heatmap-cell h-mid">0.96%</div>
+          <div class="heatmap-cell h-mid">1.14%</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-mid-2">0.82%<br><span style="font-size:9px;color:var(--text-sub);">※少量</span></div>
+          <!-- 限定 -->
+          <div class="heatmap-label" style="font-weight:600;">限定・先行</div>
+          <div class="heatmap-cell h-mid-2">1.42%</div>
+          <div class="heatmap-cell h-mid-2">1.38%</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <!-- 安心 -->
+          <div class="heatmap-label" style="font-weight:600;">安心・信頼</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low">0.64%</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <!-- 新規性 -->
+          <div class="heatmap-label" style="font-weight:600;">新規性・旬</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-mid">1.02%</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+        </div>
+        <p class="text-muted" style="font-size: 11px; margin-top: 12px;">
+          濃いオレンジ = CTR高 / グレー = 未配信（データなし）。「体験×食・グルメ」「安心×城」「新規性×伝統文化」は未配信のため数値不明。これらが次クリエイティブの候補になる。
+        </p>
+      </div>
+    </div>
+
+    <!-- 4-axis combo: Appeal × Segment (CVR) -->
+    <div class="section">
+      <h2 class="section-title">
+        4軸 組み合わせ分析 — 訴求タイプ × セグメント（CVR）
+      </h2>
+      <div class="card">
+        <div class="heatmap" style="grid-template-columns: 120px repeat(5, 1fr);">
+          <div class="heatmap-corner"></div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">ファミリー</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">20-30代女性</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">カップル</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">シニア</div>
+          <div class="heatmap-cell" style="background: var(--bg-light); font-size: 11px; color: var(--text-sub);">鉄道ファン</div>
+          <div class="heatmap-label fw-600">価格・割引</div>
+          <div class="heatmap-cell h-high">2.84%</div>
+          <div class="heatmap-cell h-mid-2">1.92%</div>
+          <div class="heatmap-cell h-high">2.46%</div>
+          <div class="heatmap-cell h-very-high">3.28%</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-label fw-600">体験・発見</div>
+          <div class="heatmap-cell h-mid-2">1.64%</div>
+          <div class="heatmap-cell h-high">2.32%</div>
+          <div class="heatmap-cell h-mid-2">1.88%</div>
+          <div class="heatmap-cell h-mid">1.24%</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-label fw-600">限定・先行</div>
+          <div class="heatmap-cell h-mid">1.42%</div>
+          <div class="heatmap-cell h-mid">1.58%</div>
+          <div class="heatmap-cell h-mid-2">1.72%</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-label fw-600">安心・信頼</div>
+          <div class="heatmap-cell h-low">0.82%</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-label fw-600">新規性・旬</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-low" style="font-size:11px;color:var(--text-sub);">未配信</div>
+          <div class="heatmap-cell h-mid-2">1.86%</div>
+        </div>
+        <p class="text-muted" style="font-size: 11px; margin-top: 12px;">
+          「体験×20-30代女性」(2.32%) は「価格×20-30代女性」(1.92%) を上回る。体験訴求の試行量を増やす余地あり。「新規性×鉄道ファン」は未配信で穴になっている可能性。
+        </p>
+      </div>
+    </div>
+
+    <!-- Creative table -->
+    <div class="section">
+      <h2 class="section-title">クリエイティブ単位の評価（上位10件）</h2>
+      <div class="table-wrap table-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 68px;">サムネ</th>
+              <th style="min-width: 160px;">クリエイティブ名</th>
+              <th>訴求タイプ</th>
+              <th>セグメント</th>
+              <th>モチーフ</th>
+              <th>デザイン</th>
+              <th class="text-right">Imp.</th>
+              <th class="text-right">クリック</th>
+              <th class="text-right">CTR</th>
+              <th class="text-right">CV数</th>
+              <th class="text-right">CVR</th>
+              <th class="text-right">CPA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="mini-ad mad-kyoto">
+                  <div class="mini-ad-bg"></div>
+                  <div class="mini-ad-content mini-ad-content-light">
+                    <div class="mini-ad-title mini-ad-title-dark">京都<br>桜の3日間</div>
+                    <div class="mini-ad-brand mini-ad-brand-dark">JR東海ツアーズ</div>
+                  </div>
+                  <div class="mini-ad-accent-bar"></div>
+                </div>
+              </td>
+              <td class="fw-600">京都「桜の3日間」<br><span class="text-muted" style="font-size: 10px;">04_kyoto_sakura_v3</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-price">価格・割引</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-couple">カップル</span><span class="axis-tag axis-seg-f20">20-30代女性</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-fuji">富士山・自然</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">820K</td>
+              <td class="text-right">17,548</td>
+              <td class="text-right fw-600">2.14%</td>
+              <td class="text-right">410</td>
+              <td class="text-right">2.34%</td>
+              <td class="text-right">¥2,024</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-ad mad-hayaki">
+                  <div class="mini-ad-bg"></div>
+                  <div class="mini-ad-content">
+                    <div class="mini-ad-title">早期予約<br>特割</div>
+                    <div class="mini-ad-brand">JR東海ツアーズ</div>
+                  </div>
+                  <div class="mini-ad-accent-bar"></div>
+                </div>
+              </td>
+              <td class="fw-600">早期予約特割<br><span class="text-muted" style="font-size: 10px;">04_early_book_v4</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-limit">限定・先行</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-couple">カップル</span><span class="axis-tag axis-seg-senior">シニア</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-fuji">富士山・自然</span><span class="axis-tag axis-motif-train">新幹線</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-text">テキスト大きめ</span></div></td>
+              <td class="text-right">540K</td>
+              <td class="text-right">7,668</td>
+              <td class="text-right">1.42%</td>
+              <td class="text-right">284</td>
+              <td class="text-right">3.70%</td>
+              <td class="text-right fw-600">¥1,648</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-ad mad-tokai">
+                  <div class="mini-ad-bg"></div>
+                  <div class="mini-ad-content">
+                    <div class="mini-ad-title">東海エリア<br>限定割引</div>
+                    <div class="mini-ad-brand">JR東海ツアーズ</div>
+                  </div>
+                  <div class="mini-ad-accent-bar"></div>
+                </div>
+              </td>
+              <td class="fw-600">東海エリア限定割引<br><span class="text-muted" style="font-size: 10px;">04_tokai_disc_v2</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-price">価格・割引</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-family">ファミリー</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-castle">城・観光地</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-collage">コラージュ</span></div></td>
+              <td class="text-right">680K</td>
+              <td class="text-right">12,376</td>
+              <td class="text-right">1.82%</td>
+              <td class="text-right">352</td>
+              <td class="text-right">2.84%</td>
+              <td class="text-right">¥1,888</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-ad mad-nagoya">
+                  <div class="mini-ad-bg"></div>
+                  <div class="mini-ad-content mini-ad-content-light">
+                    <div class="mini-ad-title mini-ad-title-dark">家族で<br>名古屋3泊</div>
+                    <div class="mini-ad-brand mini-ad-brand-dark">JR東海ツアーズ</div>
+                  </div>
+                  <div class="mini-ad-accent-bar"></div>
+                </div>
+              </td>
+              <td class="fw-600">家族で名古屋3泊<br><span class="text-muted" style="font-size: 10px;">04_family_nagoya_v2</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-exp">体験・発見</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-family">ファミリー</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-castle">城・観光地</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">320K</td>
+              <td class="text-right">3,648</td>
+              <td class="text-right">1.14%</td>
+              <td class="text-right">168</td>
+              <td class="text-right">4.61%</td>
+              <td class="text-right">¥2,202</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-ad mad-choju">
+                  <div class="mini-ad-bg"></div>
+                  <div class="mini-ad-content mini-ad-content-light">
+                    <div class="mini-ad-title mini-ad-title-brown">鳥獣戯画<br>の旅</div>
+                    <div class="mini-ad-brand mini-ad-brand-dark">JR東海ツアーズ</div>
+                  </div>
+                  <div class="mini-ad-accent-bar"></div>
+                </div>
+              </td>
+              <td class="fw-600">「鳥獣戯画」の旅<br><span class="text-muted" style="font-size: 10px;">04_kyoto_choju_v1</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-exp">体験・発見</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-f20">20-30代女性</span><span class="axis-tag axis-seg-senior">シニア</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-culture">伝統文化・アート</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-wafuu">和風イラスト</span></div></td>
+              <td class="text-right">240K</td>
+              <td class="text-right">1,968</td>
+              <td class="text-right">0.82%</td>
+              <td class="text-right">88</td>
+              <td class="text-right">4.47%</td>
+              <td class="text-right">¥2,486</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-ad mad-kyoto" style="filter: hue-rotate(200deg) saturate(0.8);">
+                  <div class="mini-ad-bg"></div>
+                  <div class="mini-ad-content">
+                    <div class="mini-ad-title">北陸新幹線<br>春プラン</div>
+                    <div class="mini-ad-brand">JR東海ツアーズ</div>
+                  </div>
+                  <div class="mini-ad-accent-bar"></div>
+                </div>
+              </td>
+              <td class="fw-600">北陸新幹線 春プラン<br><span class="text-muted" style="font-size: 10px;">04_hokuriku_spr_v1</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-new">新規性・旬</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-rail">鉄道ファン</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-train">新幹線・乗り物</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">180K</td>
+              <td class="text-right">1,836</td>
+              <td class="text-right">1.02%</td>
+              <td class="text-right">108</td>
+              <td class="text-right">5.88%</td>
+              <td class="text-right fw-600 text-success">¥1,482</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mini-ad mad-hayaki" style="filter: hue-rotate(160deg);">
+                  <div class="mini-ad-bg"></div>
+                  <div class="mini-ad-content">
+                    <div class="mini-ad-title">京都 紅葉<br>限定4泊</div>
+                    <div class="mini-ad-brand">JR東海ツアーズ</div>
+                  </div>
+                  <div class="mini-ad-accent-bar"></div>
+                </div>
+              </td>
+              <td class="fw-600">京都 紅葉 限定4泊<br><span class="text-muted" style="font-size: 10px;">04_kyoto_koyo_v2</span></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-appeal-limit">限定・先行</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-seg-couple">カップル</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-motif-fuji">富士山・自然</span></div></td>
+              <td><div class="axis-cell"><span class="axis-tag axis-design-photo">フォト重視</span></div></td>
+              <td class="text-right">290K</td>
+              <td class="text-right">4,118</td>
+              <td class="text-right">1.42%</td>
+              <td class="text-right">182</td>
+              <td class="text-right">4.42%</td>
+              <td class="text-right">¥2,108</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>atarayo prototype — 仮データ・実装前のイメージです</div>
+    <div>© atarayo Inc. / 最終更新 2026-05-24</div>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+Chart.defaults.font.family = '"Inter", "Noto Sans JP", sans-serif';
+Chart.defaults.color = '#5A6573';
+Chart.defaults.borderColor = '#D8DDE3';
+
+new Chart(document.getElementById('appeal-trend'), {
+  type: 'line',
+  data: {
+    labels: ['W14', 'W15', 'W16', 'W17', 'W18', 'W19'],
+    datasets: [
+      { label: '価格', data: [2840, 3120, 3580, 3420, 4280, 4180], borderColor: '#C25A1A', backgroundColor: 'rgba(194,90,26,0.08)', tension: 0.3, pointRadius: 3 },
+      { label: '体験', data: [780, 820, 920, 880, 1040, 1180], borderColor: '#1A4A7A', backgroundColor: 'rgba(26,74,122,0.08)', tension: 0.3, pointRadius: 3 },
+      { label: '限定・安心・新規', data: [320, 360, 380, 420, 440, 520], borderColor: '#5A6573', backgroundColor: 'rgba(90,101,115,0.08)', tension: 0.3, pointRadius: 3 }
+    ]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    interaction: { mode: 'index', intersect: false },
+    scales: { y: { beginAtZero: true, ticks: { font: { size: 11 } } }, x: { ticks: { font: { size: 11 } } } }
+  }
+});
+
+new Chart(document.getElementById('appeal-pie'), {
+  type: 'doughnut',
+  data: {
+    labels: ['価格', '体験', '限定', '安心', '新規性'],
+    datasets: [{
+      data: [62, 18, 11, 5, 4],
+      backgroundColor: ['#C25A1A', '#1A4A7A', '#C58A1A', '#5A6573', '#1E8A5F'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } },
+    cutout: '60%'
+  }
+});
+</script>
+</body>
+</html>
