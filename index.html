@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="assets/atarayo.css">
 <style>
 /* ── データアーキテクチャ図 ── */
-.arch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg-white); }
+.arch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg-white); }
 .arch-col { padding: 0; }
 .arch-col-header { padding: 10px 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; text-align: center; }
 .arch-col-header-collect { background: #1A4A7A; color: white; }
@@ -54,23 +54,22 @@
     <a href="dashboard_mail.html" class="sidebar-item">メール ダッシュボード</a>
     <a href="dashboard_ugc.html" class="sidebar-item">UGC ダッシュボード</a>
     <a href="portfolio.html" class="sidebar-item">認知ポートフォリオ</a>
-    <a href="ai_planning.html" class="sidebar-item">企画→生成 AI</a>
   </aside>
 
   <main class="main">
     <h1 class="page-title">JTT 様 — マーケティングクリエイティブ統合管理（クリエイティブAI + UGC分析）</h1>
     <p class="page-subtitle">
-      広告・LINE・メール・UGCを同じ4軸の構造データとして横断分析。「なぜ効いたか分からない」「UGCの内容把握が追いつかない」「価格訴求が勝ち続ける」を、評価エージェント＋認知ポートフォリオ＋企画AIの一つのループで解消する。
+      広告・LINE・メール・UGCを同じ4軸の構造データとして横断分析。「なぜ効いたか分からない」「UGCの内容把握が追いつかない」「価格訴求が勝ち続ける」を、評価エージェントと認知ポートフォリオで解消する。
     </p>
 
     <div class="alert alert-info">
-      <strong>このモックの狙い:</strong> UX 3層構造と技術アーキテクチャを画面イメージで先方と握る。デモ本番ではダッシュボード層を実データで実体化予定。
+      <strong>このモックの狙い:</strong> UX 2層構造と技術アーキテクチャを画面イメージで先方と握る。デモ本番ではダッシュボード層を実データで実体化予定。
     </div>
 
-    <!-- UX 3-layer -->
+    <!-- UX 2-layer -->
     <div class="section">
-      <h2 class="section-title">UX 3層構造</h2>
-      <div class="grid grid-3">
+      <h2 class="section-title">UX 2層構造</h2>
+      <div class="grid grid-2">
         <a href="dashboard_ad.html" class="card" style="display: block; color: inherit; cursor: pointer;">
           <div class="card-header">
             <span><span class="badge badge-orange">第1層</span> チャネル別</span>
@@ -87,21 +86,13 @@
           <p style="font-size: 13px; margin-bottom: 12px;">4軸（訴求タイプ × セグメント × モチーフ × デザインパターン）で「いま何が偏っているか」を可視化。</p>
           <p class="card-subtitle">代表画面: <span class="text-accent fw-600">認知ポートフォリオ →</span></p>
         </a>
-        <a href="ai_planning.html" class="card" style="display: block; color: inherit; cursor: pointer;">
-          <div class="card-header">
-            <span><span class="badge badge-orange">第3層</span> 企画→生成</span>
-            <span class="text-muted" style="font-size: 12px;">キャンペーン設計</span>
-          </div>
-          <p style="font-size: 13px; margin-bottom: 12px;">偏り分析をもとに「次に作るべきクリエイティブ」をAIと設計し、ChatGPT Image2へのプロンプトまで橋渡し。</p>
-          <p class="card-subtitle">代表画面: <span class="text-accent fw-600">企画→生成 AI →</span></p>
-        </a>
       </div>
     </div>
 
     <!-- Technical Architecture -->
     <div class="section">
       <h2 class="section-title">技術アーキテクチャ — どうやって実現するか</h2>
-      <p class="text-muted mb-16" style="font-size: 13px;">クリエイティブをGoogleドライブに蓄積 → LLMが構造データ化 → 各広告データと統合 → GCP上でダッシュボード化。ループを回すことで分析精度が上がっていく。</p>
+      <p class="text-muted mb-16" style="font-size: 13px;">クリエイティブをGoogleドライブに蓄積 → LLMが構造データ化 → 各広告データと統合 → GCP上でダッシュボード化。蓄積が進むほど分析精度が上がっていく。</p>
 
       <div class="arch-grid">
         <!-- Col 1: Collect -->
@@ -176,27 +167,6 @@
           </div>
         </div>
 
-        <!-- Col 4: Generate / Loop -->
-        <div class="arch-col">
-          <div class="arch-col-header arch-col-header-generate">④ 企画・生成ループ</div>
-          <div class="arch-col-body">
-            <div class="arch-node arch-node-accent">
-              <div class="arch-node-title">💬 企画AIエージェント</div>
-              <div class="arch-node-sub">偏り分析をもとに「次に作るべき4軸の組み合わせ」を提案。ターゲット設定 / コピー案 / 構図イメージをセットで生成。</div>
-            </div>
-            <div class="arch-col-arrow">↓ プロンプト生成</div>
-            <div class="arch-node" style="border-color: #FBBC04; background: #FEF7E0;">
-              <div class="arch-node-title">🎨 ChatGPT Image2</div>
-              <div class="arch-node-sub">AIエージェントが出力したプロンプトをデザイナーがImage2に投入。画像生成は手動（モデルは固定しない）。生成後はGoogleドライブに格納してループ継続。</div>
-              <span class="tech-tag tech-tag-llm">手動実行</span>
-            </div>
-            <div class="arch-col-arrow">↓ Googleドライブへ蓄積</div>
-            <div class="arch-node arch-node-green">
-              <div class="arch-node-title">🔄 PDCAループ完結</div>
-              <div class="arch-node-sub">新クリエイティブを配信 → 実績がBigQueryに蓄積 → 次回の分析精度が上がる。ループが回るほどタグ付けの妥当性も検証・改善できる。</div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -228,17 +198,10 @@
           <div class="flow-step flow-step-out" style="visibility:hidden;">s</div>
           <div class="flow-row-arrow">↓</div>
           <div class="flow-step flow-step-layer">Looker Studio<br><span style="font-size:10px;opacity:0.9;">第1層・第2層ダッシュボード</span></div>
-        </div>
-        <div class="flow-row">
-          <div class="flow-step flow-step-out">Googleドライブへ蓄積<br><span style="font-size:10px;opacity:0.7;">→ 次サイクルへ</span></div>
-          <div class="flow-row-arrow">←</div>
-          <div class="flow-step" style="background:#FEF7E0; border-color:#FBBC04;">ChatGPT Image2<br><span style="font-size:10px;opacity:0.7;">デザイナーが手動生成</span></div>
-          <div class="flow-row-arrow">←</div>
-          <div class="flow-step flow-step-layer">企画AIエージェント<br><span style="font-size:10px;opacity:0.9;">プロンプト案 生成</span></div>
-          <div class="flow-row-arrow">←</div>
+          <div class="flow-row-arrow">→</div>
           <div class="flow-step flow-step-layer">認知ポートフォリオ<br><span style="font-size:10px;opacity:0.9;">偏り・未配信パターン 検出</span></div>
         </div>
-        <p class="mermaid-caption">クリエイティブをGoogleドライブに蓄積、UGCをX/Instagramから自動収集 → LLMが4軸でタグ付け（UGCはテーマ分類・ネガポジも） → BigQueryで実績と統合 → Looker Studioで可視化 → 企画AIが次クリエイティブ提案 → Image2で生成 → ドライブに戻す</p>
+        <p class="mermaid-caption">クリエイティブをGoogleドライブに蓄積、UGCをX/Instagramから自動収集 → LLMが4軸でタグ付け（UGCはテーマ分類・ネガポジも） → BigQueryで実績と統合 → Looker Studioで可視化 → 認知ポートフォリオで偏り・未配信パターンを検出</p>
       </div>
     </div>
 
@@ -267,8 +230,7 @@
             <li>・ 認知ポートフォリオで「偏り」と「未配信パターン」を検出</li>
             <li>・ チャネル別役割定義（広告=認知/LINE=育成/メール=刈取）</li>
             <li>・ ファネル段階別KPI（認知層は接触深度・想起率）</li>
-            <li>・ 企画AIが「次に作るべき4軸組み合わせ」をプロンプト付きで提案</li>
-            <li>・ UGCを自動収集・分類し、広告と同じ4軸で統合分析。UGC発の訴求をクリエイティブ生成に還流</li>
+            <li>・ UGCを自動収集・分類し、広告と同じ4軸で統合分析。UGCで効いた訴求を次の施策設計に還元</li>
           </ul>
         </div>
       </div>
